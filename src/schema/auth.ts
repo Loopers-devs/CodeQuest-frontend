@@ -1,6 +1,19 @@
 
 import * as z from "zod";
 
+export function getLoginSchema(messages: {
+    invalidEmail: string,
+    minLength: (min: number) => string
+    maxLength: (max: number) => string,
+}) {
+    return z.object({
+        email: z.email({ message: messages.invalidEmail }),
+        password: z.string()
+            .min(6, { message: messages.minLength(6) })
+            .max(100, { message: messages.maxLength(100) }),
+    });
+}
+
 export function getRegisterSchema(messages: {
 	invalidEmail: string,
 	minLength: (min: number) => string,
@@ -28,3 +41,4 @@ export function getRegisterSchema(messages: {
 }
 
 export type RegisterSchema = z.infer<ReturnType<typeof getRegisterSchema>>;
+export type LoginSchema = z.infer<ReturnType<typeof getLoginSchema>>;
