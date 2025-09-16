@@ -1,5 +1,28 @@
 {
     "HomePage": {
         "welcome": "Welcome to CodeQuest!"
+    },
+    "LoginPage": {
+        "welcome": "Welcome to CodeQuest!",
+        "description": "Please log in to continue.",
+        "username": "Username",
+        "password": "Password",
+        "loginButton": "Login",
+        "forgotPassword": "Forgot Password?",
+        "registerPrompt": "Don't have an account? Register"
+    },
+    "registerForm": {
+        "fullName": "Full Name",
+        "email": "Email",
+        "password": "Password",
+        "confirmPassword": "Confirm Password",
+        "registerButton": "Register",
+        "alreadyHaveAccount": "Already have an account? Login",
+        "submit": "Iniciar sesión",
+
+        "invalidEmail": "Invalid email address",
+        "minLength": "Minimum length is {{min}} characters",
+        "maxLength": "Maximum length is {{max}} characters",
+        "passwordsDoNotMatch": "Passwords do not match"
     }
 }
