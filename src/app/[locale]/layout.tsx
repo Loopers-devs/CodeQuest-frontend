@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import { ThemeProvider } from "@/providers/theme-provider";
+import { AuthProvider } from "@/providers/AuthProvider";
 import "../globals.css";
 
 import { NextIntlClientProvider, hasLocale } from "next-intl";
@@ -37,19 +38,19 @@ export default async function RootLayout({ children, params }: Props) {
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <NextIntlClientProvider>
-            {children} 
-            <Toaster richColors position="top-right" />
-          </NextIntlClientProvider>
+          <AuthProvider>
+            <NextIntlClientProvider>
+              {children}
+              <Toaster richColors position="top-right" />
+            </NextIntlClientProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

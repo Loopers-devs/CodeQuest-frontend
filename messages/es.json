@@ -40,6 +40,8 @@
     "loginSuccess": "Inicio de sesión exitoso",
     "registrationSuccess": "Registro exitoso.",
     "emailInUse": "El correo electrónico ya está en uso.",
-    "registrationFailed": "El registro falló. Por favor, inténtalo de nuevo."
+    "registrationFailed": "El registro falló. Por favor, inténtalo de nuevo.",
+
+    "profileError": "No se pudo obtener el perfil del usuario."
   }
 }

@@ -39,6 +39,8 @@
         "loginSuccess": "Login successful",
         "registrationSuccess": "Registration successful.",
         "emailInUse": "Email is already in use.",
-        "registrationFailed": "Registration failed. Please try again."
+        "registrationFailed": "Registration failed. Please try again.",
+
+        "profileError": "Failed to fetch user profile."
     }
 }
