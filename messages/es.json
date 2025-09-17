@@ -43,5 +43,11 @@
     "registrationFailed": "El registro falló. Por favor, inténtalo de nuevo.",
 
     "profileError": "No se pudo obtener el perfil del usuario."
+  },
+  "logout": {
+    "loggingOut": "Cerrando sesión...",
+    "logoutSuccess": "Cierre de sesión exitoso",
+    "goToLogin": "Ir a iniciar sesión",
+    "error": "Error al cerrar sesión. Intenta de nuevo."
   }
 }

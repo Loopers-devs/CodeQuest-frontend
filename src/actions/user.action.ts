@@ -1,6 +1,5 @@
 "use server";
 import { serverAuthFetchWithRefresh } from '@/lib/serverAuthFetch';
-import { getTranslations } from 'next-intl/server';
 
 export async function profileAction() {
     const res = await serverAuthFetchWithRefresh('/users/profile', {
@@ -11,8 +10,7 @@ export async function profileAction() {
     });
 
     if (!res.ok) {
-        const t = await getTranslations('actions');
-        throw new Error(t('profileError'));
+        return null;
     }
 
     return res.json();
