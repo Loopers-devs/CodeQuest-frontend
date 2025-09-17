@@ -1,5 +1,9 @@
 {
     "HomePage": {
-        "welcome": "¡Bienvenido a CodeQuest!"
+        "welcome": "¡Bienvenido a CodeQuest!",
+        "title-eslogan": "Ideas que inspiran",
+        "subtitle-eslogan": "historias que conectan",
+        "paragraph-title": "Explora una colección curada de artículos, tutoriales e historias de desarrolladores, diseñadores y creadores de todo el mundo.",
+        "span-up-title": "Descubre historias increíbles"
     }
 }
