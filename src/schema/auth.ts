@@ -25,9 +25,6 @@ export function getRegisterSchema(messages: {
 		fullName: z.string()
 			.min(3, { message: messages.minLength(3) })
 			.max(60, { message: messages.maxLength(60) }),
-		nickname: z.string()
-			.min(3, { message: messages.minLength(3) })
-			.max(30, { message: messages.maxLength(30) }),
 		password: z.string()
 			.min(6, { message: messages.minLength(6) })
 			.max(100, { message: messages.maxLength(100) }),

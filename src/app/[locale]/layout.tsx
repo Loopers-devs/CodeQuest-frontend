@@ -4,9 +4,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/providers/theme-provider";
 import "../globals.css";
 
-import {NextIntlClientProvider, hasLocale} from 'next-intl';
-import {notFound} from 'next/navigation';
-import {routing} from '@/i18n/routing';
+import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { notFound } from "next/navigation";
+import { routing } from "@/i18n/routing";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,12 +26,11 @@ export const metadata: Metadata = {
 
 type Props = {
   children: React.ReactNode;
-  params: Promise<{locale: string}>;
+  params: Promise<{ locale: string }>;
 };
 
-export default async function RootLayout({children, params}: Props) {
-
-  const {locale} = await params;
+export default async function RootLayout({ children, params }: Props) {
+  const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
@@ -46,7 +46,10 @@ export default async function RootLayout({children, params}: Props) {
           enableSystem
           disableTransitionOnChange
         >
-          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+          <NextIntlClientProvider>
+            {children} 
+            <Toaster richColors position="top-right" />
+          </NextIntlClientProvider>
         </ThemeProvider>
       </body>
     </html>

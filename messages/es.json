@@ -33,5 +33,13 @@
   },
   "socialAuth": {
     "orContinueWith": "O continúa con"
+  },
+  "actions": {
+    "invalidCredentials": "Credenciales inválidas",
+    "serverError": "Error del servidor. Por favor, inténtalo de nuevo más tarde.",
+    "loginSuccess": "Inicio de sesión exitoso",
+    "registrationSuccess": "Registro exitoso.",
+    "emailInUse": "El correo electrónico ya está en uso.",
+    "registrationFailed": "El registro falló. Por favor, inténtalo de nuevo."
   }
 }

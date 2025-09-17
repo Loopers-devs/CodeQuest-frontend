@@ -5,29 +5,44 @@ import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
-import { getRegisterSchema, LoginSchema, RegisterSchema } from "@/schema/auth";
+import { getRegisterSchema, RegisterSchema } from "@/schema/auth";
+import { clientRegister } from "@/lib/auth-client";
+import { toast } from "sonner";
+import {useRouter} from '@/i18n/navigation';
+import { routes } from "@/config/routes";
 
 export const RegisterForm = () => {
   const t = useTranslations("RegisterPage");
+  const router = useRouter();
 
   const registerSchema = getRegisterSchema({
     invalidEmail: t("invalidEmail"),
     minLength: (min: number) => t("minLength", { min }),
     maxLength: (max: number) => t("maxLength", { max }),
     passwordsDoNotMatch: t("passwordsDoNotMatch"),
-  });
+  })
 
   const form = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       email: "",
+      fullName: "",
       password: "",
       confirmPassword: "",
     },
   });
 
-  const onSubmit = (data: LoginSchema) => {
-    console.log(data);
+  console.log(form.formState.errors);
+
+  const onSubmit = async (data: RegisterSchema) => {
+    const resp = await clientRegister(data);
+
+    if (resp?.error) {
+      return toast.error(resp.error);
+    }
+
+    toast.success(resp.message);
+    router.replace(routes.dashboard);
   };
 
   return (

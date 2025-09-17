@@ -7,11 +7,16 @@ import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { getLoginSchema, LoginSchema } from "@/schema/auth";
 import Link from "next/link";
+import {useRouter} from '@/i18n/navigation';
 import { routes } from "@/config/routes";
 import { Button } from "@/components/ui/button";
+import { clientLogin } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 export const LoginForm = () => {
   const t = useTranslations("LoginPage");
+  
+  const router = useRouter();
 
   const loginSchema = getLoginSchema({
     invalidEmail: t("invalidEmail"),
@@ -27,8 +32,17 @@ export const LoginForm = () => {
     },
   });
 
-  const onSubmit = (data: LoginSchema) => {
-    console.log(data);
+  const onSubmit = async (data: LoginSchema) => {
+    const result = await clientLogin(data);
+
+    if (result?.error) {
+      toast.error(result.error);
+      return;
+    }
+
+    toast.success(result?.message);
+
+    router.replace(routes.dashboard);
   };
 
   return (
