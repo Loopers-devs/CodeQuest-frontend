@@ -11,22 +11,27 @@
     "forgotPassword": "¿Olvidó su contraseña?",
     "registerPrompt": "¿No tienes una cuenta? Regístrate",
     "submit": "Iniciar sesión",
+    "noAccount": "¿No tienes una cuenta? Regístrate",
 
     "invalidEmail": "Dirección de correo electrónico no válida",
     "minLength": "La longitud mínima es de {min} caracteres",
     "maxLength": "La longitud máxima es de {max} caracteres"
   },
-  "registerForm": {
+  "RegisterPage": {
+    "welcome": "Crea tu cuenta",
+    "description": "Regístrate para empezar tu aventura.",
     "fullName": "Nombre completo",
     "email": "Correo electrónico",
     "password": "Contraseña",
     "confirmPassword": "Confirmar contraseña",
-    "registerButton": "Registrarse",
-    "alreadyHaveAccount": "¿Ya tienes una cuenta? Iniciar sesión",
-    "submit": "Iniciar sesión",
+    "submit": "Registrarse",
     "invalidEmail": "Dirección de correo electrónico no válida",
     "minLength": "La longitud mínima es de {min} caracteres",
     "maxLength": "La longitud máxima es de {max} caracteres",
-    "passwordsDoNotMatch": "Las contraseñas no coinciden"
+    "passwordsDoNotMatch": "Las contraseñas no coinciden",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta? Inicia sesión"
+  },
+  "socialAuth": {
+    "orContinueWith": "O continúa con"
   }
 }

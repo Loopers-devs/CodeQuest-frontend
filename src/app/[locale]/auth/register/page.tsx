@@ -6,14 +6,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { LoginForm } from "./login-form";
 import SocialAuth from "@/components/social-auth";
 import Link from "next/link";
 import { routes } from "@/config/routes";
 import { Button } from "@/components/ui/button";
+import { RegisterForm } from "./register-form";
 
-export default function LoginPage() {
-  const t = useTranslations("LoginPage");
+export default function RegisterPage() {
+  const t = useTranslations("RegisterPage");
 
   return (
     <div className="flex items-center justify-center h-svh w-full">
@@ -23,11 +23,11 @@ export default function LoginPage() {
           <CardDescription>{t("description")}</CardDescription>
         </CardHeader>
         <CardContent>
-          <LoginForm />
+          <RegisterForm />
 
           <div className="flex justify-center">
-            <Button variant="link" asChild className="">
-              <Link href={routes.register}>{t("noAccount")}</Link>
+            <Button variant="link" asChild>
+              <Link href={routes.login}>{t("alreadyHaveAccount")}</Link>
             </Button>
           </div>
         </CardContent>
