@@ -1,5 +1,53 @@
 {
-    "HomePage": {
-        "welcome": "¡Bienvenido a CodeQuest!"
-    }
+  "HomePage": {
+    "welcome": "¡Bienvenido a CodeQuest!"
+  },
+  "LoginPage": {
+    "welcome": "¡Bienvenido a CodeQuest!",
+    "description": "Por favor, inicie sesión para continuar.",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "loginButton": "Iniciar sesión",
+    "forgotPassword": "¿Olvidó su contraseña?",
+    "registerPrompt": "¿No tienes una cuenta? Regístrate",
+    "submit": "Iniciar sesión",
+    "noAccount": "¿No tienes una cuenta? Regístrate",
+
+    "invalidEmail": "Dirección de correo electrónico no válida",
+    "minLength": "La longitud mínima es de {min} caracteres",
+    "maxLength": "La longitud máxima es de {max} caracteres"
+  },
+  "RegisterPage": {
+    "welcome": "Crea tu cuenta",
+    "description": "Regístrate para empezar tu aventura.",
+    "fullName": "Nombre completo",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "submit": "Registrarse",
+    "invalidEmail": "Dirección de correo electrónico no válida",
+    "minLength": "La longitud mínima es de {min} caracteres",
+    "maxLength": "La longitud máxima es de {max} caracteres",
+    "passwordsDoNotMatch": "Las contraseñas no coinciden",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta? Inicia sesión"
+  },
+  "socialAuth": {
+    "orContinueWith": "O continúa con"
+  },
+  "actions": {
+    "invalidCredentials": "Credenciales inválidas",
+    "serverError": "Error del servidor. Por favor, inténtalo de nuevo más tarde.",
+    "loginSuccess": "Inicio de sesión exitoso",
+    "registrationSuccess": "Registro exitoso.",
+    "emailInUse": "El correo electrónico ya está en uso.",
+    "registrationFailed": "El registro falló. Por favor, inténtalo de nuevo.",
+
+    "profileError": "No se pudo obtener el perfil del usuario."
+  },
+  "logout": {
+    "loggingOut": "Cerrando sesión...",
+    "logoutSuccess": "Cierre de sesión exitoso",
+    "goToLogin": "Ir a iniciar sesión",
+    "error": "Error al cerrar sesión. Intenta de nuevo."
+  }
 }
