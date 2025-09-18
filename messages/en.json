@@ -12,6 +12,7 @@
     "registerPrompt": "Don't have an account? Register",
     "submit": "Login",
     "noAccount": "Don't have an account? Register",
+
     "invalidEmail": "Invalid email address",
     "minLength": "Minimum length is {min} characters",
     "maxLength": "Maximum length is {max} characters"
@@ -48,5 +49,64 @@
     "logoutSuccess": "Logout successful",
     "goToLogin": "Go to login",
     "error": "Error logging out. Please try again."
+  },
+  "sidebar": {
+    "home": "Home",
+    "myPosts": "My posts",
+    "profile": "Profile",
+
+    "logout": "Logout"
+  },
+
+  "form": {
+    "invalidEmail": "Invalid email address",
+    "minLength": "Minimum length is {min} characters",
+    "maxLength": "Maximum length is {max} characters",
+    "passwordsDoNotMatch": "Passwords do not match"
+  },
+
+  "dashboard": {
+    "profile": {
+      "editProfile": "Edit profile",
+      "updateProfile": "Update profile",
+      "nickname": "Nickname",
+      "email": "Email",
+      "fullName": "Full name",
+      "profilePicture": "Profile picture",
+      "updateProfilePicture": "Update your profile picture",
+      "changeAvatar": "Change avatar",
+      "removeAvatar": "Remove avatar",
+      "profileInformation": "Profile information",
+      "updateProfileInformation": "Update your personal information"
+    },
+    "posts": {
+      "columns": {
+        "title": "Title",
+        "status": "Status",
+        "visibility": "Visibility",
+        "published": "Published",
+        "views": "Views",
+        "comments": "Comments",
+        "reactions": "Reactions",
+        "actions": "Actions"
+      },
+      "status": {
+        "DRAFT": "Draft",
+        "PUBLISHED": "Published",
+        "ARCHIVED": "Archived"
+      },
+      "visibility": {
+        "PUBLIC": "Public",
+        "MEMBERS": "Members",
+        "PRIVATE": "Private"
+      }
+      ,
+      "filters": {
+        "searchPlaceholder": "Search posts...",
+        "statusLabel": "Status",
+        "visibilityLabel": "Visibility",
+        "all": "All"
+      }
+    }
   }
 }

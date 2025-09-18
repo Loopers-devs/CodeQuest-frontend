@@ -78,6 +78,35 @@
       "removeAvatar": "Eliminar avatar",
       "profileInformation": "Información del perfil",
       "updateProfileInformation": "Actualiza tu información personal"
+    },
+    "posts": {
+      "columns": {
+        "title": "Título",
+        "status": "Estado",
+        "visibility": "Visibilidad",
+        "published": "Publicado",
+        "views": "Vistas",
+        "comments": "Comentarios",
+        "reactions": "Reacciones",
+        "actions": "Acciones"
+      },
+      "status": {
+        "DRAFT": "Borrador",
+        "PUBLISHED": "Publicado",
+        "ARCHIVED": "Archivado"
+      },
+      "visibility": {
+        "PUBLIC": "Público",
+        "MEMBERS": "Miembros",
+        "PRIVATE": "Privado"
+      }
+      ,
+      "filters": {
+        "searchPlaceholder": "Buscar publicaciones...",
+        "statusLabel": "Estado",
+        "visibilityLabel": "Visibilidad",
+        "all": "Todos"
+      }
     }
-  } 
+  }
 }
