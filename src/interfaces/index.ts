@@ -23,3 +23,47 @@ export interface User {
     deletedAt: null | Date;
 
 }
+
+export enum PostStatus {
+    DRAFT = 'DRAFT',
+    PUBLISHED = 'PUBLISHED',
+    ARCHIVED = 'ARCHIVED',
+}
+
+export enum PostVisibility {
+    PUBLIC = 'PUBLIC',
+    MEMBERS = 'MEMBERS',
+    PRIVATE = 'PRIVATE',
+}
+
+export interface Post {
+    id: string;
+    slug: string;
+    title: string;
+    summary?: string | null;
+    content: string; // markdown o html
+
+    // Clasificación y búsqueda
+    category?: string | null;
+    tags: string[];
+
+    // Publicación
+    status: PostStatus;
+    visibility: PostVisibility;
+    coverImageUrl?: string | null;
+    publishedAt?: Date | null;
+
+    // Métricas
+    views: number;
+    commentsCount: number;
+    reactionsCount: number;
+
+    // Auditoría
+    createdAt: Date;
+    updatedAt: Date;
+    deletedAt?: Date | null;
+
+    // Autor
+    authorId: number;
+    author?: User; // puede venir expandido o solo el id
+}
