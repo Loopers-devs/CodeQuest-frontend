@@ -1,4 +1,5 @@
 "use server";
+import { User } from '@/interfaces';
 import { serverAuthFetchWithRefresh } from '@/lib/serverAuthFetch';
 
 export async function profileAction() {
@@ -13,5 +14,5 @@ export async function profileAction() {
         return null;
     }
 
-    return res.json();
+    return await res.json() as User;
 }

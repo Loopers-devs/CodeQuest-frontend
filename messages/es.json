@@ -49,5 +49,35 @@
     "logoutSuccess": "Cierre de sesión exitoso",
     "goToLogin": "Ir a iniciar sesión",
     "error": "Error al cerrar sesión. Intenta de nuevo."
-  }
+  },
+  "sidebar": {
+    "home": "Inicio",
+    "myPosts": "Mis publicaciones",
+    "profile": "Perfil",
+
+    "logout": "Cerrar sesión"
+  },
+
+  "form": {
+    "invalidEmail": "Dirección de correo electrónico no válida",
+    "minLength": "La longitud mínima es de {min} caracteres",
+    "maxLength": "La longitud máxima es de {max} caracteres",
+    "passwordsDoNotMatch": "Las contraseñas no coinciden"
+  },
+
+  "dashboard": {
+    "profile": {
+      "editProfile": "Editar perfil",
+      "updateProfile": "Actualizar perfil",
+      "nickname": "Apodo",
+      "email": "Correo electrónico",
+      "fullName": "Nombre completo",
+      "profilePicture": "Foto de perfil",
+      "updateProfilePicture": "Actualiza tu foto de perfil",
+      "changeAvatar": "Cambiar avatar",
+      "removeAvatar": "Eliminar avatar",
+      "profileInformation": "Información del perfil",
+      "updateProfileInformation": "Actualiza tu información personal"
+    }
+  } 
 }
