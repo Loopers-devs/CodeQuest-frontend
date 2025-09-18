@@ -1,16 +1,17 @@
 import { LoginSchema, RegisterSchema } from "@/schema/auth";
 import { getTranslations } from "next-intl/server";
 
-
 export async function getSocialAuthUrl(provider: "google" | "discord") {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3000/api";
+  const backendUrl =
+    process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3000/api";
   if (provider === "google") return `${backendUrl}/auth/google`;
   if (provider === "discord") return `${backendUrl}/auth/discord`;
   const t = await getTranslations("auth");
   throw new Error(t("unsupportedProvider"));
 }
 
-const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3000/api";
+const backendUrl =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3000/api";
 // Refresca la sesión del usuario llamando al endpoint /auth/refresh
 export async function clientRefreshSession() {
   const resp = await fetch(`${backendUrl}/auth/refresh`, {
@@ -36,7 +37,11 @@ export async function clientRefreshSession() {
   return true;
 }
 
-export async function clientRegister({ email, fullName, password }: RegisterSchema) {
+export async function clientRegister({
+  email,
+  fullName,
+  password,
+}: RegisterSchema) {
   const resp = await fetch(`${backendUrl}/auth/register`, {
     method: "POST",
     credentials: "include",
@@ -47,11 +52,18 @@ export async function clientRegister({ email, fullName, password }: RegisterSche
   });
 
   if (!resp.ok) {
-    const data = await resp.json().catch(() => ({}));
-    return { error: data.error || "Error en el registro", message: null };
+    const data = await resp.json();
+
+    const msg: Record<string, string> = {
+      Unauthorized: "emailInUse",
+    };
+
+    const error = msg[data?.error] || "serverError";
+
+    return { error: error, message: null };
   }
 
-  return { error: null, message: "Registro exitoso" };
+  return { error: null, message: "registrationSuccess" };
 }
 
 export async function clientLogin(data: LoginSchema) {
@@ -74,18 +86,24 @@ export async function clientLogin(data: LoginSchema) {
   return { error: null, message: "Inicio de sesión exitoso" };
 }
 
-export function buildSocialUrl(provider: 'google' | 'discord', opts?: { redirect?: string; locale?: string }) {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001';
+export function buildSocialUrl(
+  provider: "google" | "discord",
+  opts?: { redirect?: string; locale?: string }
+) {
+  const backendUrl =
+    process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
   const base = `${backendUrl}/auth/${provider}`;
 
   // redirect deseado: si no pasas, cae a dashboard del locale actual
-  const redirect = opts?.redirect ?? `/${opts?.locale || 'es'}/dashboard`;
+  const redirect = opts?.redirect ?? `/${opts?.locale || "es"}/dashboard`;
 
   // state codifica dónde volver; tu guard en Nest debe devolver state intacto en el callback
-  const state = Buffer.from(JSON.stringify({ redirect }), 'utf-8').toString('base64');
+  const state = Buffer.from(JSON.stringify({ redirect }), "utf-8").toString(
+    "base64"
+  );
 
   const url = new URL(base);
-  url.searchParams.set('state', state);
+  url.searchParams.set("state", state);
 
   // Opcional: pedir offline access para Google si quieres refresh del proveedor (no necesario para tu sesión propia)
   // url.searchParams.set('access_type', 'offline');
@@ -95,7 +113,7 @@ export function buildSocialUrl(provider: 'google' | 'discord', opts?: { redirect
 
 export function clientLogout() {
   return fetch(`${backendUrl}/auth/logout`, {
-    method: 'GET',
-    credentials: 'include',
+    method: "GET",
+    credentials: "include",
   });
 }
