@@ -1,11 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 import heroImage from "@/assets/hero-bg.jpg";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-const Hero = () => {
-
-    const t = useTranslations('HomePage')
+const Hero = async () => {
+    const t = await getTranslations('HomePage')
 
     return (
         <section className="relative overflow-hidden bg-gradient-to-b from-background to-muted/30">
@@ -42,11 +41,11 @@ const Hero = () => {
 
                     <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
                         <Button size="lg" className="gradient-hero border-0 hover:opacity-90 transition-smooth shadow-elevated">
-                            <span className="text-black font-medium">Comenzar a leer</span>
-                            <ArrowRight className="ml-2 h-5 w-5 text-black" />
+                            <span className="font-medium">{t('read-more')}</span>
+                            <ArrowRight className="ml-2 h-5 w-5" />
                         </Button>
                         <Button size="lg" variant="outline" className="bg-background/80 backdrop-blur">
-                            Escribir mi historia
+                            {t('write-my-story')}
                         </Button>
                     </div>
                 </div>

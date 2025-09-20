@@ -97,3 +97,40 @@ export async function getPostBySlugAction(slug: string) {
 
     return data as Post;
 }
+
+export async function getAllPostsAction(postListQuery: PostListQuery) {
+
+    const url = buildUrlWithParams('/posts', postListQuery);
+
+    const res = await serverAuthFetchWithRefresh(url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+
+    if (!res.ok) {
+        throw new Error('Error fetching all posts');
+    }
+
+    const data = await res.json();
+
+    return data as { items: Post[]; nextCursor: string | null };
+}
+
+
+const buildUrlWithParams = (baseUrl: string, searchParams?: PostListQuery) => {
+    const params = new URLSearchParams();
+
+    Object.entries(searchParams ?? {}).forEach(([key, value]) => {
+        if (!value) return;
+        
+        params.append(key, String(value));
+    })
+
+    const queryString = params.toString();
+
+    return queryString ? `${baseUrl}?${queryString}` : baseUrl;
+
+
+}

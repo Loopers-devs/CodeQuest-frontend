@@ -1,10 +1,21 @@
 {
   "HomePage": {
+    "meta-title": "CodeQuest - Historias que inspiran",
+    "meta-description": "Explora una colección curada de artículos, tutoriales e historias de desarrolladores, diseñadores y creadores de todo el mundo.",
     "welcome": "¡Bienvenido a CodeQuest!",
     "title-eslogan": "Ideas que inspiran",
     "subtitle-eslogan": "historias que conectan",
     "paragraph-title": "Explora una colección curada de artículos, tutoriales e historias de desarrolladores, diseñadores y creadores de todo el mundo.",
-    "span-up-title": "Descubre historias increíbles"
+    "span-up-title": "Descubre historias increíbles",
+    "view-all": "Ver todos",
+    "load-more": "Cargar más posts",
+    "latest-posts": "Posts Destacados",
+    "read-more": "Comenzar a leer",
+    "write-my-story": "Escribir mi historia",
+    "header": {
+      "login": "Iniciar sesión",
+      "write": "Escribir"
+    }
   },
   "LoginPage": {
     "welcome": "¡Bienvenido a CodeQuest!",
