@@ -30,8 +30,9 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
-export default async function RootLayout({ children, params }: Props) {
-  const { locale } = await params;
+export default async function RootLayout({children, params}: Props) {
+
+  const {locale} = await params;
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }

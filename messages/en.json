@@ -1,6 +1,10 @@
 {
   "HomePage": {
-    "welcome": "Welcome to CodeQuest!"
+    "welcome": "Welcome to CodeQuest!",
+    "title-eslogan": "Ideas that inspire",
+    "subtitle-eslogan": "stories that connect",
+    "paragraph-title": "Explore a curated collection of articles, tutorials, and stories from developers, designers, and creators from around the world.",
+    "span-up-title": "Discover incredible stories"
   },
   "LoginPage": {
     "welcome": "Welcome to CodeQuest!",
@@ -83,7 +87,7 @@
       "updateProfileInformation": "Update your personal information"
     },
     "posts": {
-  "createPost": "Create Post",
+      "createPost": "Create Post",
       "columns": {
         "title": "Title",
         "status": "Status",
@@ -103,15 +107,13 @@
         "PUBLIC": "Public",
         "MEMBERS": "Members",
         "PRIVATE": "Private"
-      }
-      ,
+      },
       "filters": {
         "searchPlaceholder": "Search posts...",
         "statusLabel": "Status",
         "visibilityLabel": "Visibility",
         "all": "All"
-      }
-      ,
+      },
       "form": {
         "postInformation": "Post information",
         "postInformationDescription": "Add the title, summary and the main content of your post here.",
@@ -135,9 +137,9 @@
         "publish": "Publish",
         "scheduled": "Scheduled",
         "searchPlaceholder": "Search posts...",
-  "createPostButton": "Create post",
-  "createPostSuccess": "Post created successfully.",
-  "createPostError": "Failed to create the post. Please try again.",
+        "createPostButton": "Create post",
+        "createPostSuccess": "Post created successfully.",
+        "createPostError": "Failed to create the post. Please try again.",
         "pageDescription": "Add your post details and configure its visibility and status from this panel.",
         "editPost": "Edit post",
         "editPostPageDescription": "Edit the details of your post and update its visibility or status.",
