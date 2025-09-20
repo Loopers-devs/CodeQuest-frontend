@@ -14,7 +14,12 @@
     "write-my-story": "Escribir mi historia",
     "header": {
       "login": "Iniciar sesión",
-      "write": "Escribir"
+      "write": "Escribir",
+      "myAccount": "Mi cuenta",
+      "dashboard": "Panel",
+      "myPosts": "Mis posts",
+      "favorites": "Favoritos",
+      "logout": "Cerrar sesión"
     }
   },
   "LoginPage": {

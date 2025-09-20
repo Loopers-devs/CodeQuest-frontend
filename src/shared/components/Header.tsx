@@ -5,6 +5,7 @@ import logoDevTalles from "@/assets/png/LOGO B.png";
 import Link from "next/link";
 import { routes } from "@/config/routes";
 import { getTranslations } from "next-intl/server";
+import AuthMenu from "./AuthMenu";
 // import { Link } from "react-router-dom";
 
 const Header = async () => {
@@ -44,12 +45,13 @@ const Header = async () => {
                         <Heart className="h-4 w-4 mr-2" />
                         Favoritos
                     </Button> */}
-          <Button variant="outline" size="sm" asChild>
+          {/* <Button variant="outline" size="sm" asChild>
             <Link href={routes.login}>
               <User className="h-4 w-4 mr-2" />
               {t('login')}
             </Link>
-          </Button>
+          </Button> */}
+          <AuthMenu />
           <Button
             size="sm"
             className="gradient-hero border-0 hover:opacity-90 transition-smooth"
