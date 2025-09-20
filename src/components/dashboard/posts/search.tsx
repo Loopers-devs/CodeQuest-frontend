@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { PostStatus, PostVisibility } from "@/interfaces";
 import { useTranslations } from "next-intl";
 import { getStringParam, getEnumParam, paramToSelectValue } from "@/lib/url";
@@ -29,64 +29,83 @@ export default function PostsSearch() {
 
   const ALL_VALUE = "__ALL__";
 
-  const qParam = getStringParam(searchParams, "search");
-  const statusParam = getEnumParam(searchParams, "status", PostStatus);
-  const visibilityParam = getEnumParam(searchParams, "visibility", PostVisibility);
-
-  const [q, setQ] = useState(qParam ?? "");
-  const [status, setStatus] = useState<string>(paramToSelectValue(statusParam, ALL_VALUE));
-  const [visibility, setVisibility] = useState<string>(paramToSelectValue(visibilityParam, ALL_VALUE));
-
-  const timeoutRef = useRef<number | null>(null);
-
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      if (value && value !== ALL_VALUE) {
-        params.set(name, value);
-      } else {
-        params.delete(name);
-      }
-
-      params.delete("page");
-      return params.toString();
-    },
+  const initialSearch = useMemo(
+    () =>
+      getStringParam(new URLSearchParams(searchParams.toString()), "search") ??
+      "",
     [searchParams]
   );
-  useEffect(() => {
-    if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
 
-    timeoutRef.current = window.setTimeout(() => {
-      const qs = createQueryString("search", q.trim());
-      router.push(`${pathname}?${qs}`);
-    }, 300);
+  const initialStatus = useMemo(
+    () =>
+      paramToSelectValue(
+        getEnumParam(
+          new URLSearchParams(searchParams.toString()),
+          "status",
+          PostStatus
+        ),
+        ALL_VALUE
+      ),
+    [searchParams]
+  );
 
-    return () => {
-      if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
-    };
-  }, [q, createQueryString, pathname, router]);
+  const initialVisibility = useMemo(
+    () =>
+      paramToSelectValue(
+        getEnumParam(
+          new URLSearchParams(searchParams.toString()),
+          "visibility",
+          PostVisibility
+        ),
+        ALL_VALUE
+      ),
+    [searchParams]
+  );
 
+  const [inputValue, setInputValue] = useState(initialSearch);
 
-  const onStatusChange = (value: string) => {
-    setStatus(value);
-    const qs = createQueryString("status", value);
-    router.push(`${pathname}?${qs}`);
+  const setParam = useCallback(
+    (
+      updates: Record<string, string | null>,
+      opts: { resetPage?: boolean; replace?: boolean } = {
+        resetPage: true,
+        replace: true,
+      }
+    ) => {
+      const params = new URLSearchParams(searchParams.toString());
+      Object.entries(updates).forEach(([k, v]) => {
+        if (v == null || v.trim?.() === "") params.delete(k);
+        else params.set(k, v);
+      });
+      if (opts.resetPage) params.set("page", "1");
+      const url = `${pathname}?${params.toString()}`;
+      const nav = opts.replace ? router.replace : router.push;
+      nav(url, { scroll: false });
+    },
+    [router, pathname, searchParams]
+  );
+  const handleClickSearch = () => {
+    // Sin debounce cuando se hace click en el botón de búsqueda
+    const normalized = inputValue.trim();
+    setParam({ search: normalized === "" ? null : normalized });
   };
 
-  const onVisibilityChange = (value: string) => {
-    setVisibility(value);
-    const qs = createQueryString("visibility", value);
-    router.push(`${pathname}?${qs}`);
+  const handleSettingSelect = (
+    param: "status" | "visibility" | "search",
+    value: string
+  ) => {
+    setParam({ [param]: value === ALL_VALUE ? null : value });
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
 
-  // keep local state in sync with URL changes (e.g., back/forward)
-  useEffect(() => {
-    setQ(getStringParam(searchParams, "search") ?? "");
-    setStatus(paramToSelectValue(getEnumParam(searchParams, "status", PostStatus), ALL_VALUE));
-    setVisibility(paramToSelectValue(getEnumParam(searchParams, "visibility", PostVisibility), ALL_VALUE));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams.toString()]);
+    if (value.trim() === "") {
+      handleSettingSelect("search", "");
+    }
+
+    setInputValue(value);
+  };
 
   return (
     <div className="mb-4 flex justify-between flex-col gap-3 sm:flex-row sm:items-center">
@@ -94,13 +113,14 @@ export default function PostsSearch() {
         <Input
           placeholder={placeholder}
           className="w-full pr-10"
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
+          value={inputValue}
+          onChange={handleInputChange}
         />
-        <Button size="icon" className="rounded-l-none absolute top-0 right-0" onClick={() => {
-          const qs = createQueryString("search", q.trim());
-          router.push(`${pathname}?${qs}`);
-        }}>
+        <Button
+          size="icon"
+          className="rounded-l-none absolute top-0 right-0"
+          onClick={handleClickSearch}
+        >
           <SearchIcon />
         </Button>
       </div>
@@ -108,7 +128,10 @@ export default function PostsSearch() {
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:flex md:items-center md:gap-4">
         <div className="flex items-center gap-2">
           <span className="text-sm">{statusLabel}</span>
-          <Select value={status} onValueChange={onStatusChange}>
+          <Select
+            value={initialStatus}
+            onValueChange={(v) => handleSettingSelect("status", v)}
+          >
             <SelectTrigger className="w-40">
               <SelectValue placeholder={allLabel} />
             </SelectTrigger>
@@ -127,7 +150,10 @@ export default function PostsSearch() {
 
         <div className="flex items-center gap-2">
           <span className="text-sm">{visibilityLabel}</span>
-          <Select value={visibility} onValueChange={onVisibilityChange}>
+          <Select
+            value={initialVisibility}
+            onValueChange={(v) => handleSettingSelect("visibility", v)}
+          >
             <SelectTrigger className="w-40">
               <SelectValue placeholder={allLabel} />
             </SelectTrigger>
