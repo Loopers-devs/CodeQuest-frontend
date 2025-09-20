@@ -16,3 +16,11 @@ export async function profileAction() {
 
     return await res.json() as User;
 }
+
+export async function sessionAction() {
+    const user = await profileAction();
+
+    if (!user) throw new Error('No session');
+
+    return user;
+}

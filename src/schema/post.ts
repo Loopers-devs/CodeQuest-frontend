@@ -83,3 +83,6 @@ export function getCreatePostSchema(messages: {
 }
 
 export type CreatePostSchema = z.infer<ReturnType<typeof getCreatePostSchema>>;
+
+
+export type UpdatePostSchema = z.infer<ReturnType<typeof getCreatePostSchema>>;

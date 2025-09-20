@@ -134,7 +134,15 @@
         "scheduled": "Programado",
         "searchPlaceholder": "Buscar publicaciones...",
         "createPostButton": "Crear publicación",
-        "pageDescription": "Agrega los detalles de tu publicación y configura su visibilidad y estado desde este panel."
+        "createPostSuccess": "Publicación creada con éxito.",
+        "createPostError": "No se pudo crear la publicación. Por favor, inténtalo de nuevo.",
+        "pageDescription": "Agrega los detalles de tu publicación y configura su visibilidad y estado desde este panel.",
+        "editPost": "Editar publicación",
+        "editPostPageDescription": "Edita los detalles de tu publicación y actualiza su visibilidad o estado.",
+        "updatePostButton": "Actualizar publicación",
+        "updatePostSuccess": "Publicación actualizada con éxito.",
+        "updatePostError": "No se pudo actualizar la publicación. Por favor, inténtalo de nuevo.",
+        "updatePostNotFound": "Publicación no encontrada. Puede haber sido eliminada."
       }
     }
   }

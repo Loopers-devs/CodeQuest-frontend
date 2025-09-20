@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { Pagination } from "@/components/pagination";
 import PostsSearch from "@/components/dashboard/posts/search";
 import { getPostsByUserAction } from "@/actions/post.action";
+import { sessionAction } from '@/actions/user.action';
 import { PostStatus, PostVisibility } from "@/interfaces";
 
 interface Props {
@@ -42,7 +43,11 @@ export default async function PostsPage({ searchParams }: Props) {
     },
   };
 
-  const { items, nextCursor } = await getPostsByUserAction({ authorId: 2, take, search: params.search, status: params.status as PostStatus, visibility: params.visibility as PostVisibility});
+  const user = await sessionAction();
+
+
+
+  const { items } = await getPostsByUserAction({ authorId: user.id, take, search: params.search, status: params.status as PostStatus, visibility: params.visibility as PostVisibility});
 
   return (
     <div>

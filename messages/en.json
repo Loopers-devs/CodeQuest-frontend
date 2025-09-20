@@ -135,8 +135,16 @@
         "publish": "Publish",
         "scheduled": "Scheduled",
         "searchPlaceholder": "Search posts...",
-        "createPostButton": "Create post",
-        "pageDescription": "Add your post details and configure its visibility and status from this panel."
+  "createPostButton": "Create post",
+  "createPostSuccess": "Post created successfully.",
+  "createPostError": "Failed to create the post. Please try again.",
+        "pageDescription": "Add your post details and configure its visibility and status from this panel.",
+        "editPost": "Edit post",
+        "editPostPageDescription": "Edit the details of your post and update its visibility or status.",
+        "updatePostButton": "Update post",
+        "updatePostSuccess": "Post updated successfully.",
+        "updatePostError": "Failed to update the post. Please try again.",
+        "updatePostNotFound": "Post not found. It might have been deleted."
       }
     }
   }

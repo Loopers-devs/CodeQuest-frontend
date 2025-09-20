@@ -11,6 +11,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { EllipsisVerticalIcon } from "lucide-react";
 
 export type PostsTranslations = {
   columns: {
@@ -106,7 +114,8 @@ export const createColumns = (
       accessorKey: "publishedAt",
       header: () => translations.columns.published,
       cell: ({ row }) => {
-        return <div></div>;
+        const post = row.original;
+        return <div>{post.publishedAt ? new Date(post.publishedAt).toLocaleDateString() : '-'}</div>;
       },
     },
     {
@@ -114,7 +123,23 @@ export const createColumns = (
       header: () => translations.columns.actions,
       cell: ({ row }) => {
         const post = row.original;
-        return <div></div>;
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost">
+                <EllipsisVerticalIcon />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem asChild>
+                <Link href={`/dashboard/posts/${post.slug}/edit`}>Edit</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => console.log('delete', post.id)}>
+                Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
       },
     },
   ];

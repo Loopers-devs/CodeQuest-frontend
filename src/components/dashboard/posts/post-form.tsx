@@ -9,14 +9,25 @@ import { Card, CardContent } from "@/components/ui/card";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
-import { CreatePostSchema, getCreatePostSchema } from "@/schema/post";
-import { PostStatus, PostVisibility } from "@/interfaces";
-import { createPostAction } from "@/actions/post.action";
+import {
+  getCreatePostSchema,
+  UpdatePostSchema,
+  CreatePostSchema,
+} from "@/schema/post";
+import { Post, PostStatus, PostVisibility } from "@/interfaces";
+import { createPostAction, updatePostAction } from "@/actions/post.action";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
-export default function PostForm() {
+interface Props {
+  post?: Post;
+}
+
+export default function PostForm({ post }: Props) {
   const t = useTranslations("dashboard.posts");
   const tForm = useTranslations("form");
+
+  const router = useRouter();
 
   const schema = getCreatePostSchema({
     minLength: (min: number) => tForm("minLength", { min }),
@@ -26,31 +37,46 @@ export default function PostForm() {
     invalidSlug: tForm("invalidSlug"),
   });
 
+  const defaultValues = {
+    title: post?.title || "",
+    slug: post?.slug || "",
+    summary: post?.summary || "",
+    content: post?.content || "",
+    category: post?.category || "",
+    tags: post?.tags || [],
+    status: post?.status || PostStatus.DRAFT,
+    visibility: post?.visibility || PostVisibility.PRIVATE,
+    coverImageUrl: "https://via.placeholder.com/800x400.png?text=Cover+Image",
+  };
+
   const form = useForm({
     resolver: zodResolver(schema),
-    defaultValues: {
-      title: "",
-      slug: "",
-      summary: "",
-      content: "",
-      category: "",
-      tags: [],
-      status: PostStatus.DRAFT,
-      visibility: PostVisibility.PUBLIC,
-      coverImageUrl: null,
-    },
+    defaultValues: defaultValues,
   });
 
-  console.log(form.formState.errors);
+  const onSubmit = async (data: unknown) => {
+    const payload = data as Partial<UpdatePostSchema>;
 
-  const onSubmit = async (data: CreatePostSchema) => {
-    const result = await createPostAction(data);
+    if (post) {
+      const result = await updatePostAction(post.id, payload);
 
-    if (result?.error) {
-        return toast.error(result.error);
+      if (result?.error) {
+        toast.error(t("form.updatePostError"));
+        return;
+      }
+      toast.success(t("form.updatePostSuccess"));
+
+      return router.push("/dashboard/posts");
     }
 
-    toast.success("Post created successfully!");
+    const result = await createPostAction(payload as CreatePostSchema);
+
+    if (result?.error) {
+      toast.error(tForm("createPostError"));
+      return;
+    }
+
+    toast.success(tForm("createPostSuccess"));
     form.reset();
   };
 
@@ -61,9 +87,13 @@ export default function PostForm() {
         className="space-y-6 flex flex-col"
       >
         <div>
-          <h1 className="text-2xl font-semibold">{t("createPost")}</h1>
+          <h1 className="text-2xl font-semibold">
+            {post ? t("form.editPost") : t("createPost")}
+          </h1>
           <p className="text-sm text-muted-foreground">
-            {t("form.pageDescription")}
+            {post
+              ? t("form.editPostPageDescription")
+              : t("form.pageDescription")}
           </p>
         </div>
 
@@ -173,7 +203,7 @@ export default function PostForm() {
 
         <CustomButton
           type="submit"
-          label={t("form.createPostButton")}
+          label={post ? t("form.updatePostButton") : t("form.createPostButton")}
           size="lg"
           className="w-fit self-end"
         />
