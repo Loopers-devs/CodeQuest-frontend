@@ -3,14 +3,7 @@
 import { Link } from "@/i18n/navigation";
 import { Post, PostStatus, PostVisibility } from "@/interfaces";
 import { ColumnDef } from "@tanstack/react-table";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Badge } from '@/components/ui/badge';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -67,21 +60,16 @@ export const createColumns = (
       header: () => translations.columns.status,
       cell: ({ getValue }) => {
         const v = getValue() as PostStatus;
+        const statusVariant: Record<PostStatus, 'success' | 'warning' | 'destructive' | 'muted'> = {
+          DRAFT: 'warning',
+          PUBLISHED: 'success',
+          ARCHIVED: 'muted',
+        };
+
         return (
-          <Select defaultValue={v}>
-            <SelectTrigger className="w-[150px]">
-              <SelectValue placeholder="Select a fruit" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {Object.values(PostStatus).map((status) => (
-                  <SelectItem key={status} value={status}>
-                    {getStatusLabel(translations, status)}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <Badge variant={statusVariant[v]}>
+            {getStatusLabel(translations, v)}
+          </Badge>
         );
       },
     },
@@ -90,32 +78,17 @@ export const createColumns = (
       header: () => translations.columns.visibility,
       cell: ({ getValue }) => {
         const v = getValue() as PostVisibility;
+        const visibilityVariant: Record<PostVisibility, 'success' | 'warning' | 'muted' | 'info'> = {
+          PUBLIC: 'success',
+          MEMBERS: 'warning',
+          PRIVATE: 'muted',
+        };
+
         return (
-                      <Select defaultValue={v}>
-            <SelectTrigger className="w-[150px]">
-              <SelectValue placeholder="Select a fruit" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {
-                    Object.values(PostVisibility).map((visibility) => (
-                      <SelectItem key={visibility} value={visibility}>
-                        {getVisibilityLabel(translations, visibility)}
-                      </SelectItem>
-                    ))
-                }
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <Badge variant={visibilityVariant[v]}>
+            {getVisibilityLabel(translations, v)}
+          </Badge>
         );
-      },
-    },
-    {
-      accessorKey: "publishedAt",
-      header: () => translations.columns.published,
-      cell: ({ row }) => {
-        const post = row.original;
-        return <div>{post.publishedAt ? new Date(post.publishedAt).toLocaleDateString() : '-'}</div>;
       },
     },
     {
