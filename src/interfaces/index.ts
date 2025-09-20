@@ -95,3 +95,14 @@ export interface PostListQuery {
     take?: number;
     includes?: PostInclude[];
 }
+
+export interface PagedResult<T> {
+    items: T[];
+    nextCursor: string | null;
+    metadata: {
+        totalPages: number;
+        currentPage: number;
+        nextPage: number | null;
+        previousPage: number | null;
+    }
+}

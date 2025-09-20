@@ -1,5 +1,5 @@
 "use server";
-import { Post, PostListQuery } from "@/interfaces";
+import { PagedResult, Post, PostListQuery } from "@/interfaces";
 import { serverAuthFetchWithRefresh } from "@/lib/serverAuthFetch";
 import { CreatePostSchema } from "@/schema/post";
 import { revalidatePath } from "next/cache";
@@ -115,7 +115,7 @@ export async function getAllPostsAction(postListQuery: PostListQuery) {
 
     const data = await res.json();
 
-    return data as { items: Post[]; nextCursor: string | null };
+    return data as PagedResult<Post>;
 }
 
 

@@ -3,12 +3,14 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import { ThemeProvider } from "@/providers/theme-provider";
 import { AuthProvider } from "@/providers/AuthProvider";
+import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import "../globals.css";
 
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { Toaster } from "@/components/ui/sonner";
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,10 +49,13 @@ export default async function RootLayout({children, params}: Props) {
           disableTransitionOnChange
         >
           <AuthProvider>
-            <NextIntlClientProvider>
-              {children}
-              <Toaster richColors position="top-right" />
-            </NextIntlClientProvider>
+            <ReactQueryProvider>
+              <NextIntlClientProvider>
+                {children}
+                <Toaster richColors position="top-right" />
+              </NextIntlClientProvider>
+              <ReactQueryDevtools initialIsOpen={false} />
+            </ReactQueryProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>
