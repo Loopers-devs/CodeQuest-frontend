@@ -1,9 +1,10 @@
 import React from "react";
 import PostsClient from "@/components/dashboard/posts/post-client";
-import { mockPosts } from "@/lib/mocks/posts";
 import { getTranslations } from "next-intl/server";
 import { Pagination } from "@/components/pagination";
 import PostsSearch from "@/components/dashboard/posts/search";
+import { getPostsByUserAction } from "@/actions/post.action";
+import { PostStatus, PostVisibility } from "@/interfaces";
 
 interface Props {
   searchParams: Promise<{ page?: string; take?: string; search?: string; status?: string; visibility?: string }>;
@@ -17,22 +18,6 @@ export default async function PostsPage({ searchParams }: Props) {
   const page = params.page ? parseInt(params.page) : 1;
   const take = params.take ? parseInt(params.take) : 5;
 
-  // apply filters from URL (search, status, visibility) to the mock data
-  const search = params.search ? params.search.trim().toLowerCase() : "";
-  const statusFilter = params.status ? params.status : undefined;
-  const visibilityFilter = params.visibility ? params.visibility : undefined;
-
-  const filtered = mockPosts.filter((p) => {
-    if (statusFilter && p.status !== statusFilter) return false;
-    if (visibilityFilter && p.visibility !== visibilityFilter) return false;
-    if (search) {
-      const inTitle = p.title?.toLowerCase().includes(search);
-      const inSlug = p.slug?.toLowerCase().includes(search);
-      const inSummary = p.summary?.toLowerCase().includes(search);
-      return !!(inTitle || inSlug || inSummary);
-    }
-    return true;
-  });
 
   const translations = {
     columns: {
@@ -57,14 +42,13 @@ export default async function PostsPage({ searchParams }: Props) {
     },
   };
 
-  const data = filtered.slice((page - 1) * take, page * take);
-  const totalPages = Math.ceil(filtered.length / take);
+  const { items, nextCursor } = await getPostsByUserAction({ authorId: 2, take, search: params.search, status: params.status as PostStatus, visibility: params.visibility as PostVisibility});
 
   return (
     <div>
       <PostsSearch />  
-      <PostsClient translations={translations} data={data} />
-      <Pagination currentPage={page} totalPages={totalPages} />
+      <PostsClient translations={translations} data={items} />
+      <Pagination currentPage={page} totalPages={Math.ceil(items.length / take)} />
     </div>
   );
 }

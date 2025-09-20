@@ -62,7 +62,10 @@
     "invalidEmail": "Dirección de correo electrónico no válida",
     "minLength": "La longitud mínima es de {min} caracteres",
     "maxLength": "La longitud máxima es de {max} caracteres",
-    "passwordsDoNotMatch": "Las contraseñas no coinciden"
+    "passwordsDoNotMatch": "Las contraseñas no coinciden",
+    "invalidUrl": "URL inválida",
+    "invalidDate": "Fecha inválida",
+    "invalidSlug": "Slug inválido"
   },
 
   "dashboard": {
@@ -80,6 +83,7 @@
       "updateProfileInformation": "Actualiza tu información personal"
     },
     "posts": {
+      "createPost": "Crear publicación",
       "columns": {
         "title": "Título",
         "status": "Estado",
@@ -99,13 +103,38 @@
         "PUBLIC": "Público",
         "MEMBERS": "Miembros",
         "PRIVATE": "Privado"
-      }
-      ,
+      },
       "filters": {
         "searchPlaceholder": "Buscar publicaciones...",
         "statusLabel": "Estado",
         "visibilityLabel": "Visibilidad",
         "all": "Todos"
+      },
+      "form": {
+        "postInformation": "Información de la publicación",
+        "postInformationDescription": "Agrega el título, resumen y el contenido principal de tu publicación aquí.",
+        "title": "Título",
+        "slug": "Slug",
+        "summary": "Resumen",
+        "content": "Contenido",
+        "classification": "Clasificación y búsqueda",
+        "classificationDescription": "Agrega categorías y etiquetas para mejorar la búsqueda y organización.",
+        "tags": "Etiquetas",
+        "category": "Categoría",
+        "publicationSettings": "Configuración de publicación",
+        "publicationSettingsDescription": "Controla el estado y la visibilidad de la publicación. La fecha de publicación y la imagen de portada estarán disponibles próximamente.",
+        "statusLabel": "Estado",
+        "visibilityLabel": "Visibilidad",
+        "coverImage": "Imagen de portada",
+        "publishedAt": "Fecha de publicación",
+        "statusPlaceholder": "Selecciona un estado",
+        "visibilityPlaceholder": "Selecciona la visibilidad",
+        "saveDraft": "Guardar borrador",
+        "publish": "Publicar",
+        "scheduled": "Programado",
+        "searchPlaceholder": "Buscar publicaciones...",
+        "createPostButton": "Crear publicación",
+        "pageDescription": "Agrega los detalles de tu publicación y configura su visibilidad y estado desde este panel."
       }
     }
   }

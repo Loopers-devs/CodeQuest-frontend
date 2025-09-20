@@ -8,6 +8,8 @@ type BackendRoute =
   | "/auth/login"
   | "/auth/register"
   | "/auth/logout"
+  | "/posts"
+  | string
   ;
 
 // Fetch autenticado del lado del servidor, con intento de refresh automático si expira la sesión

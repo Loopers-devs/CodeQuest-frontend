@@ -67,3 +67,28 @@ export interface Post {
     authorId: number;
     author?: User; // puede venir expandido o solo el id
 }
+
+export type PostSortBy =
+    | 'publishedAt'
+    | 'createdAt'
+    | 'views'
+    | 'reactionsCount'
+    | 'commentsCount';
+
+export type SortOrder = 'asc' | 'desc';
+
+export interface PostListQuery {
+    search?: string;
+    authorId?: number;
+    category?: string | null;
+    tags?: string[];
+    status?: PostStatus;
+    visibility?: PostVisibility;
+    publishedOnly?: boolean;
+    dateFrom?: Date;
+    dateTo?: Date;
+    sortBy?: PostSortBy;
+    order?: SortOrder;
+    cursor?: string;
+    take?: number;
+}

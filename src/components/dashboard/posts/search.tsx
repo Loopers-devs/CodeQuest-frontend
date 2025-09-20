@@ -15,6 +15,7 @@ import React, { useCallback, useMemo, useState } from "react";
 import { PostStatus, PostVisibility } from "@/interfaces";
 import { useTranslations } from "next-intl";
 import { getStringParam, getEnumParam, paramToSelectValue } from "@/lib/url";
+import Link from "next/link";
 
 export default function PostsSearch() {
   const t = useTranslations("dashboard.posts");
@@ -85,7 +86,6 @@ export default function PostsSearch() {
     [router, pathname, searchParams]
   );
   const handleClickSearch = () => {
-    // Sin debounce cuando se hace click en el botón de búsqueda
     const normalized = inputValue.trim();
     setParam({ search: normalized === "" ? null : normalized });
   };
@@ -169,6 +169,10 @@ export default function PostsSearch() {
             </SelectContent>
           </Select>
         </div>
+
+        <Button asChild size="sm" variant="secondary">
+          <Link href="/dashboard/posts/create">{t("createPost")}</Link>
+        </Button>
       </div>
     </div>
   );
