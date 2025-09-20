@@ -13,6 +13,7 @@ import { routes } from "@/config/routes";
 
 export const RegisterForm = () => {
   const t = useTranslations("RegisterPage");
+  const a = useTranslations("actions");
   const router = useRouter();
 
   const registerSchema = getRegisterSchema({
@@ -32,17 +33,15 @@ export const RegisterForm = () => {
     },
   });
 
-  console.log(form.formState.errors);
-
   const onSubmit = async (data: RegisterSchema) => {
     const resp = await clientRegister(data);
 
     if (resp?.error) {
-      return toast.error(resp.error);
+      return toast.error(a(resp.error));
     }
 
     toast.success(resp.message);
-    router.replace(routes.dashboard);
+    router.replace(routes.home);
   };
 
   return (

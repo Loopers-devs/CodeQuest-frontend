@@ -49,5 +49,101 @@
     "logoutSuccess": "Cierre de sesión exitoso",
     "goToLogin": "Ir a iniciar sesión",
     "error": "Error al cerrar sesión. Intenta de nuevo."
+  },
+  "sidebar": {
+    "home": "Inicio",
+    "myPosts": "Mis publicaciones",
+    "profile": "Perfil",
+
+    "logout": "Cerrar sesión"
+  },
+
+  "form": {
+    "invalidEmail": "Dirección de correo electrónico no válida",
+    "minLength": "La longitud mínima es de {min} caracteres",
+    "maxLength": "La longitud máxima es de {max} caracteres",
+    "passwordsDoNotMatch": "Las contraseñas no coinciden",
+    "invalidUrl": "URL inválida",
+    "invalidDate": "Fecha inválida",
+    "invalidSlug": "Slug inválido"
+  },
+
+  "dashboard": {
+    "profile": {
+      "editProfile": "Editar perfil",
+      "updateProfile": "Actualizar perfil",
+      "nickname": "Apodo",
+      "email": "Correo electrónico",
+      "fullName": "Nombre completo",
+      "profilePicture": "Foto de perfil",
+      "updateProfilePicture": "Actualiza tu foto de perfil",
+      "changeAvatar": "Cambiar avatar",
+      "removeAvatar": "Eliminar avatar",
+      "profileInformation": "Información del perfil",
+      "updateProfileInformation": "Actualiza tu información personal"
+    },
+    "posts": {
+      "createPost": "Crear publicación",
+      "columns": {
+        "title": "Título",
+        "status": "Estado",
+        "visibility": "Visibilidad",
+        "published": "Publicado",
+        "views": "Vistas",
+        "comments": "Comentarios",
+        "reactions": "Reacciones",
+        "actions": "Acciones"
+      },
+      "status": {
+        "DRAFT": "Borrador",
+        "PUBLISHED": "Publicado",
+        "ARCHIVED": "Archivado"
+      },
+      "visibility": {
+        "PUBLIC": "Público",
+        "MEMBERS": "Miembros",
+        "PRIVATE": "Privado"
+      },
+      "filters": {
+        "searchPlaceholder": "Buscar publicaciones...",
+        "statusLabel": "Estado",
+        "visibilityLabel": "Visibilidad",
+        "all": "Todos"
+      },
+      "form": {
+        "postInformation": "Información de la publicación",
+        "postInformationDescription": "Agrega el título, resumen y el contenido principal de tu publicación aquí.",
+        "title": "Título",
+        "slug": "Slug",
+        "summary": "Resumen",
+        "content": "Contenido",
+        "classification": "Clasificación y búsqueda",
+        "classificationDescription": "Agrega categorías y etiquetas para mejorar la búsqueda y organización.",
+        "tags": "Etiquetas",
+        "category": "Categoría",
+        "publicationSettings": "Configuración de publicación",
+        "publicationSettingsDescription": "Controla el estado y la visibilidad de la publicación. La fecha de publicación y la imagen de portada estarán disponibles próximamente.",
+        "statusLabel": "Estado",
+        "visibilityLabel": "Visibilidad",
+        "coverImage": "Imagen de portada",
+        "publishedAt": "Fecha de publicación",
+        "statusPlaceholder": "Selecciona un estado",
+        "visibilityPlaceholder": "Selecciona la visibilidad",
+        "saveDraft": "Guardar borrador",
+        "publish": "Publicar",
+        "scheduled": "Programado",
+        "searchPlaceholder": "Buscar publicaciones...",
+        "createPostButton": "Crear publicación",
+        "createPostSuccess": "Publicación creada con éxito.",
+        "createPostError": "No se pudo crear la publicación. Por favor, inténtalo de nuevo.",
+        "pageDescription": "Agrega los detalles de tu publicación y configura su visibilidad y estado desde este panel.",
+        "editPost": "Editar publicación",
+        "editPostPageDescription": "Edita los detalles de tu publicación y actualiza su visibilidad o estado.",
+        "updatePostButton": "Actualizar publicación",
+        "updatePostSuccess": "Publicación actualizada con éxito.",
+        "updatePostError": "No se pudo actualizar la publicación. Por favor, inténtalo de nuevo.",
+        "updatePostNotFound": "Publicación no encontrada. Puede haber sido eliminada."
+      }
+    }
   }
 }
