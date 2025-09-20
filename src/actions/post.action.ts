@@ -19,6 +19,7 @@ export async function createPostAction(inputs: CreatePostSchema): Promise<{ erro
     }
 
     const data = await res.json();
+    revalidatePath('/dashboard/posts');
 
 
     return { error: null, status: res.status, data };

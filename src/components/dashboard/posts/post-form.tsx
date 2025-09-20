@@ -72,12 +72,13 @@ export default function PostForm({ post }: Props) {
     const result = await createPostAction(payload as CreatePostSchema);
 
     if (result?.error) {
-      toast.error(tForm("createPostError"));
+      toast.error(t("form.createPostError"));
       return;
     }
 
-    toast.success(tForm("createPostSuccess"));
+    toast.success(t("form.createPostSuccess"));
     form.reset();
+    return router.push("/dashboard/posts");
   };
 
   return (
