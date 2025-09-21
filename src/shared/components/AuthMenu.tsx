@@ -38,7 +38,9 @@ export default function AuthMenu() {
           <DropdownMenuSeparator />
           <DropdownMenuItem>{t("dashboard")}</DropdownMenuItem>
           <DropdownMenuItem>{t("myPosts")}</DropdownMenuItem>
-          <DropdownMenuItem>{t("favorites")}</DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href={routes.favorites}>{t("favorites")}</Link>
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem>{t("logout")}</DropdownMenuItem>
         </DropdownMenuContent>

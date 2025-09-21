@@ -118,20 +118,6 @@ export async function getAllPostsAction(postListQuery: PostListQuery) {
   return data as PagedResult<Post>;
 }
 
-const buildUrlWithParams = (baseUrl: string, searchParams?: PostListQuery) => {
-  const params = new URLSearchParams();
-
-  Object.entries(searchParams ?? {}).forEach(([key, value]) => {
-    if (!value) return;
-
-    params.append(key, String(value));
-  });
-
-  const queryString = params.toString();
-
-  return queryString ? `${baseUrl}?${queryString}` : baseUrl;
-};
-
 // ===================== Favorite Posts Actions =====================
 export async function addPostToFavorites(postId: string) {
   const res = await serverAuthFetchWithRefresh("/post-favorites", {
@@ -146,6 +132,7 @@ export async function addPostToFavorites(postId: string) {
     throw new Error("Error adding post to favorites");
   }
 
+  revalidatePath("/dashboard/favorites");
   return true;
 }
 
@@ -161,5 +148,41 @@ export async function removePostFromFavorites(postId: string) {
     console.log(await res.json());
     throw new Error("Error removing post from favorites");
   }
+
   return true;
 }
+
+export async function getFavoritePostsByUser({ take, cursor }: { take?: number; cursor?: string } = {}) {
+
+  const url = buildUrlWithParams('/post-favorites', { take, cursor });
+
+  const res = await serverAuthFetchWithRefresh(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("Error fetching favorite posts");
+  }
+
+  const data = await res.json();
+
+  return data as { items: Post[]; nextCursor: string | null};
+}
+
+
+const buildUrlWithParams = (baseUrl: string, searchParams?: PostListQuery) => {
+  const params = new URLSearchParams();
+
+  Object.entries(searchParams ?? {}).forEach(([key, value]) => {
+    if (!value) return;
+
+    params.append(key, String(value));
+  });
+
+  const queryString = params.toString();
+
+  return queryString ? `${baseUrl}?${queryString}` : baseUrl;
+};

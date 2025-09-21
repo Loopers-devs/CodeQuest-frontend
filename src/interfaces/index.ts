@@ -4,23 +4,22 @@ export enum Roles {
 
 export interface User {
   id: number;
-  fullName: string;
-  nickname: string | null;
   email: string;
-  password: null;
-  roles: Roles[];
+  fullName: string;
   image: string | null;
-
-  //TODO: Este campo debería ser boolean
-  emailVerified: null;
-  emailVerificationToken: null | string;
-  emailVerificationTokenExpiry: null | Date;
-
-  passwordResetToken: null | string;
-
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: null | Date;
+  nickname: string | null;
+  provider: string;
+  providerAccountId: string | null;
+  roles: string[];
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
+  emailVerified: string | null;
+  emailVerificationToken: string | null;
+  emailVerificationExpiry: string | null;
+  password: string | null;
+  passwordResetToken: string | null;
+  passwordResetTokenExpiry: string | null;
 }
 
 export enum PostStatus {
@@ -68,6 +67,7 @@ export interface Post {
 
   // Favoritos
   favoritedBy?: { userId: number }[]; // para saber si el usuario autenticado ha marcado como favorito
+  isFavorited: boolean; // campo calculado para indicar si el usuario autenticado ha marcado como favorito
 }
 
 export type PostSortBy =

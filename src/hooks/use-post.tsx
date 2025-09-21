@@ -1,6 +1,7 @@
 import {
   addPostToFavorites,
   getAllPostsAction,
+  getFavoritePostsByUser,
   removePostFromFavorites,
 } from "@/actions/post.action";
 import { Post, PostListQuery, PostsOldData } from "@/interfaces";
@@ -12,12 +13,15 @@ import {
 } from "@tanstack/react-query";
 
 export const usePosts = (postListQuery: PostListQuery) => {
+  const session = useAuth();
+
   return useInfiniteQuery({
     queryKey: ["posts"],
     initialPageParam: undefined,
     queryFn: async ({ pageParam }: { pageParam: string | undefined }) =>
       await getAllPostsAction({ ...postListQuery, cursor: pageParam }),
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
+    enabled: !session.loading, // Solo se ejecuta cuando isLoading es false
   });
 };
 
@@ -37,8 +41,7 @@ export const useAddPostToFavorites = (postId: string) => {
         const itemUpdated = items.find((item: Post) => item.id === postId);
 
         if (itemUpdated && session?.id) {
-          itemUpdated.favoritedBy = itemUpdated.favoritedBy || [];
-          itemUpdated.favoritedBy.push({ userId: session.id });
+          itemUpdated.isFavorited = true;
         }
 
         return {
@@ -58,6 +61,9 @@ export const useAddPostToFavorites = (postId: string) => {
     onError: (error) => {
       console.error("Error adding post to favorites:", error);
     },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["favoritePosts"] });
+    },
   });
 };
 
@@ -75,9 +81,7 @@ export const useRemovePostFromFavorites = (postId: string) => {
         const itemUpdated = items.find((item: Post) => item.id === postId);
 
         if (itemUpdated && session?.id) {
-          itemUpdated.favoritedBy = itemUpdated.favoritedBy?.filter(
-            (fav) => fav.userId !== session.id,
-          );
+          itemUpdated.isFavorited = false;
         }
 
         return {
@@ -93,9 +97,40 @@ export const useRemovePostFromFavorites = (postId: string) => {
           })),
         };
       });
+
+      queryClient.setQueryData(["favoritePosts"], (oldData?: PostsOldData) => {
+        if (!oldData) return oldData;
+
+        const pages = oldData.pages.map((page) => {
+          const filtered = page.items.filter(
+            (item: Post) => item.id !== postId
+          );
+
+          if (filtered.length === page.items.length) return page;
+          return { ...page, items: filtered };
+        });
+
+        return { ...oldData, pages, pageParams: oldData.pageParams };
+      });
     },
     onError: (error) => {
       console.error("Error removing post from favorites:", error);
     },
+  });
+};
+
+export const useFavoritePosts = ({
+  take,
+  nextCursor,
+}: {
+  take?: number;
+  nextCursor?: string;
+}) => {
+  return useInfiniteQuery({
+    queryKey: ["favoritePosts"],
+    queryFn: async ({ pageParam }: { pageParam: string | undefined }) =>
+      await getFavoritePostsByUser({ take, cursor: pageParam }),
+    initialPageParam: nextCursor,
+    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
   });
 };
