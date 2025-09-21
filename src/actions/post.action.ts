@@ -4,133 +4,185 @@ import { serverAuthFetchWithRefresh } from "@/lib/serverAuthFetch";
 import { CreatePostSchema } from "@/schema/post";
 import { revalidatePath } from "next/cache";
 
-export async function createPostAction(inputs: CreatePostSchema): Promise<{ error: string | null; status: number; data: Post | null }> {
+export async function createPostAction(
+  inputs: CreatePostSchema
+): Promise<{ error: string | null; status: number; data: Post | null }> {
+  const res = await serverAuthFetchWithRefresh("/posts", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(inputs),
+  });
 
-    const res = await serverAuthFetchWithRefresh("/posts", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(inputs),
-    });
+  if (!res.ok) {
+    return { error: "Error creating post", status: res.status, data: null };
+  }
 
-    if (!res.ok) {
-        return { error: 'Error creating post', status: res.status, data: null };
-    }
+  const data = await res.json();
+  revalidatePath("/dashboard/posts");
 
-    const data = await res.json();
-    revalidatePath('/dashboard/posts');
-
-
-    return { error: null, status: res.status, data };
+  return { error: null, status: res.status, data };
 }
 
 export async function getPostsByUserAction(postListQuery: PostListQuery) {
+  const { authorId, ...rest } = postListQuery;
 
-    const { authorId, ...rest } = postListQuery;
 
-    console.log({ rest })
+  const url = `/posts/author/${authorId}`;
 
-    const url = `/posts/author/${authorId}`;
+  const params = new URLSearchParams();
 
-    const params = new URLSearchParams();
+  Object.entries(rest).forEach(([key, value]) => {
+    if (!value) return;
 
-    Object.entries(rest).forEach(([key, value]) => {
-        if (!value) return;
-        
-        params.append(key, String(value));
-    })
+    params.append(key, String(value));
+  });
 
-    const queryString = params.toString();
+  const queryString = params.toString();
 
-    const fullUrl = queryString ? `${url}?${queryString}` : url;
+  const fullUrl = queryString ? `${url}?${queryString}` : url;
 
-    const res = await serverAuthFetchWithRefresh(fullUrl, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
+  const res = await serverAuthFetchWithRefresh(fullUrl, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-    if (!res.ok) {
-        throw new Error('Error fetching posts');
-    }
+  if (!res.ok) {
+    throw new Error("Error fetching posts");
+  }
 
-    const data = await res.json();
+  const data = await res.json();
 
-    return data as { items: Post[]; nextCursor: string | null  };
+  return data as { items: Post[]; nextCursor: string | null };
 }
 
-export async function updatePostAction(id: string, inputs: Partial<CreatePostSchema>): Promise<{ error: string | null; status: number; data: Post | null }> {
-    const res = await serverAuthFetchWithRefresh(`/posts/${id}`, {
-        method: "PATCH",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(inputs),
-    });
+export async function updatePostAction(
+  id: string,
+  inputs: Partial<CreatePostSchema>
+): Promise<{ error: string | null; status: number; data: Post | null }> {
+  const res = await serverAuthFetchWithRefresh(`/posts/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(inputs),
+  });
 
-    if (!res.ok) {
-        return { error: 'Error updating post', status: res.status, data: null };
-    }
+  if (!res.ok) {
+    return { error: "Error updating post", status: res.status, data: null };
+  }
 
-    const data = await res.json();
+  const data = await res.json();
 
-    revalidatePath('/dashboard/posts');
+  revalidatePath("/dashboard/posts");
 
-    return { error: null, status: res.status, data };
+  return { error: null, status: res.status, data };
 }
 
 export async function getPostBySlugAction(slug: string) {
-    const res = await serverAuthFetchWithRefresh(`/posts/slug/${slug}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
+  const res = await serverAuthFetchWithRefresh(`/posts/slug/${slug}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-    if (!res.ok) {
-        throw new Error('Error fetching post by slug');
-    }
+  if (!res.ok) {
+    throw new Error("Error fetching post by slug");
+  }
 
-    const data = await res.json();
+  const data = await res.json();
 
-    return data as Post;
+  return data as Post;
 }
 
 export async function getAllPostsAction(postListQuery: PostListQuery) {
+  const url = buildUrlWithParams("/posts", postListQuery);
 
-    const url = buildUrlWithParams('/posts', postListQuery);
+  const res = await serverAuthFetchWithRefresh(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-    const res = await serverAuthFetchWithRefresh(url, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
+  if (!res.ok) {
+    throw new Error("Error fetching all posts");
+  }
 
-    if (!res.ok) {
-        throw new Error('Error fetching all posts');
-    }
+  const data = await res.json();
 
-    const data = await res.json();
+  return data as PagedResult<Post>;
+}
 
-    return data as PagedResult<Post>;
+// ===================== Favorite Posts Actions =====================
+export async function addPostToFavorites(postId: string) {
+  const res = await serverAuthFetchWithRefresh("/post-favorites", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ postId }),
+  });
+
+  if (!res.ok) {
+    throw new Error("Error adding post to favorites");
+  }
+
+  revalidatePath("/dashboard/favorites");
+  return true;
+}
+
+export async function removePostFromFavorites(postId: string) {
+  const res = await serverAuthFetchWithRefresh('/post-favorites', {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ postId }),
+  });
+  if (!res.ok) {
+    console.log(await res.json());
+    throw new Error("Error removing post from favorites");
+  }
+
+  return true;
+}
+
+export async function getFavoritePostsByUser({ take, cursor }: { take?: number; cursor?: string } = {}) {
+
+  const url = buildUrlWithParams('/post-favorites', { take, cursor });
+
+  const res = await serverAuthFetchWithRefresh(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("Error fetching favorite posts");
+  }
+
+  const data = await res.json();
+
+  return data as { items: Post[]; nextCursor: string | null};
 }
 
 
 const buildUrlWithParams = (baseUrl: string, searchParams?: PostListQuery) => {
-    const params = new URLSearchParams();
+  const params = new URLSearchParams();
 
-    Object.entries(searchParams ?? {}).forEach(([key, value]) => {
-        if (!value) return;
-        
-        params.append(key, String(value));
-    })
+  Object.entries(searchParams ?? {}).forEach(([key, value]) => {
+    if (!value) return;
 
-    const queryString = params.toString();
+    params.append(key, String(value));
+  });
 
-    return queryString ? `${baseUrl}?${queryString}` : baseUrl;
+  const queryString = params.toString();
 
-
-}
+  return queryString ? `${baseUrl}?${queryString}` : baseUrl;
+};

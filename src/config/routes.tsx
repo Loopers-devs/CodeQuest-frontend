@@ -1,4 +1,4 @@
-import { LayoutDashboardIcon, ListIcon, UserCog } from "lucide-react"
+import { BookmarkPlus, LayoutDashboardIcon, ListIcon, UserCog } from "lucide-react"
 
 export const routes = {
     home: '/',
@@ -7,6 +7,7 @@ export const routes = {
     recoverPassword: '/auth/recover-password',
     dashboard: '/dashboard',
     logout: '/logout',
+    favorites: '/dashboard/favorites'
 }
 
 export const sidebarRoutes = [
@@ -24,5 +25,10 @@ export const sidebarRoutes = [
         title: 'profile',
         href: '/dashboard/profile',
         icon: UserCog
+    },
+    {
+        title: 'favorites',
+        href: routes.favorites,
+        icon: BookmarkPlus
     }
 ]

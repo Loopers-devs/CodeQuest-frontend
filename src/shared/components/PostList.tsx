@@ -5,11 +5,16 @@ import CustomButton from "@/components/custom-button";
 import { usePosts } from "@/hooks/use-post";
 import React from "react";
 import { useTranslations } from "next-intl";
+import { useAuth } from "@/providers/AuthProvider";
 
 export default function PostList() {
+
+  const session = useAuth();
+
   const { data, isLoading, fetchNextPage, isFetching, hasNextPage } = usePosts({
     take: 4,
-    includes: ["author"],
+    includes: ["author", "favorites"],
+    userId: session?.user?.id, // Pasar el ID del usuario autenticado
   });
 
   const t = useTranslations("HomePage");
