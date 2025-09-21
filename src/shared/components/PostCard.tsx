@@ -2,9 +2,12 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Heart, MessageCircle, BookmarkPlus, Clock } from "lucide-react";
+import { Heart, MessageCircle, BookmarkPlus, Clock, Loader2Icon } from "lucide-react";
 import { Post } from "@/interfaces";
 import Image from "next/image";
+import { useAddPostToFavorites, useRemovePostFromFavorites } from "@/hooks/use-post";
+import { cn } from "@/lib/utils";
+import { useAuth } from "@/providers/AuthProvider";
 // import { Link } from "react-router-dom";
 
 interface PostCardProps {
@@ -14,6 +17,12 @@ interface PostCardProps {
 const PostCard = ({ 
     post
  }: PostCardProps) => {
+
+    const session = useAuth();
+    const { mutate: addToFavorites } = useAddPostToFavorites(post.id);
+    const { mutate: removeFromFavorites } = useRemovePostFromFavorites(post.id);
+
+    const isFavorite = post.favoritedBy?.find(fav => fav.userId === session?.user?.id) ? true : false;
 
     const name = post.author?.fullName || post.author?.nickname || 'Autor Desconocido';
 
@@ -36,7 +45,7 @@ const PostCard = ({
                     <Badge variant="secondary" className="bg-primary/10 text-primary hover:bg-primary/20">
                         {post.category}
                     </Badge>
-                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-smooth">
+                    <Button variant="ghost" size="sm" className={cn("h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-smooth", { "text-primary opacity-100": isFavorite })} onClick={() => isFavorite ? removeFromFavorites() : addToFavorites()}>
                         <BookmarkPlus className="h-4 w-4" />
                     </Button>
                 </div>
@@ -80,7 +89,7 @@ const PostCard = ({
                     </div>
 
                     <div className="flex items-center space-x-3 text-muted-foreground">
-                        <Button variant="ghost" size="sm" className="h-8 px-2 hover:text-red-500 transition-smooth">
+                        <Button variant="ghost" size="sm" className={cn("h-8 px-2 hover:text-red-500 transition-smooth")}>
                             <Heart className="h-4 w-4 mr-1" />
                             <span className="text-xs">{post.reactionsCount}</span>
                         </Button>

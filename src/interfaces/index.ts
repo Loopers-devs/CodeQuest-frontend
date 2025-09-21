@@ -1,108 +1,125 @@
 export enum Roles {
-    USER
+  USER,
 }
 
 export interface User {
-    id: number;
-    fullName: string;
-    nickname: string | null;
-    email: string;
-    password: null;
-    roles: Roles[];
-    image: string | null;
+  id: number;
+  fullName: string;
+  nickname: string | null;
+  email: string;
+  password: null;
+  roles: Roles[];
+  image: string | null;
 
-    //TODO: Este campo debería ser boolean
-    emailVerified: null;
-    emailVerificationToken: null | string;
-    emailVerificationTokenExpiry: null | Date;
+  //TODO: Este campo debería ser boolean
+  emailVerified: null;
+  emailVerificationToken: null | string;
+  emailVerificationTokenExpiry: null | Date;
 
-    passwordResetToken: null | string;
+  passwordResetToken: null | string;
 
-    createdAt: Date;
-    updatedAt: Date;
-    deletedAt: null | Date;
-
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: null | Date;
 }
 
 export enum PostStatus {
-    DRAFT = 'DRAFT',
-    PUBLISHED = 'PUBLISHED',
-    ARCHIVED = 'ARCHIVED',
+  DRAFT = "DRAFT",
+  PUBLISHED = "PUBLISHED",
+  ARCHIVED = "ARCHIVED",
 }
 
 export enum PostVisibility {
-    PUBLIC = 'PUBLIC',
-    MEMBERS = 'MEMBERS',
-    PRIVATE = 'PRIVATE',
+  PUBLIC = "PUBLIC",
+  MEMBERS = "MEMBERS",
+  PRIVATE = "PRIVATE",
 }
 
 export interface Post {
-    id: string;
-    slug: string;
-    title: string;
-    summary?: string | null;
-    content: string; // markdown o html
+  id: string;
+  slug: string;
+  title: string;
+  summary?: string | null;
+  content: string; // markdown o html
 
-    // Clasificación y búsqueda
-    category?: string | null;
-    tags: string[];
+  // Clasificación y búsqueda
+  category?: string | null;
+  tags: string[];
 
-    // Publicación
-    status: PostStatus;
-    visibility: PostVisibility;
-    coverImageUrl?: string | null;
-    publishedAt?: Date | null;
+  // Publicación
+  status: PostStatus;
+  visibility: PostVisibility;
+  coverImageUrl?: string | null;
+  publishedAt?: Date | null;
 
-    // Métricas
-    views: number;
-    commentsCount: number;
-    reactionsCount: number;
+  // Métricas
+  views: number;
+  commentsCount: number;
+  reactionsCount: number;
 
-    // Auditoría
-    createdAt: Date;
-    updatedAt: Date;
-    deletedAt?: Date | null;
+  // Auditoría
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt?: Date | null;
 
-    // Autor
-    authorId: number;
-    author?: Pick<User, 'id' | 'fullName' | 'nickname' | 'image'>; // puede venir expandido o solo el id
+  // Autor
+  authorId: number;
+  author?: Pick<User, "id" | "fullName" | "nickname" | "image">; // puede venir expandido o solo el id
+
+  // Favoritos
+  favoritedBy?: { userId: number }[]; // para saber si el usuario autenticado ha marcado como favorito
 }
 
 export type PostSortBy =
-    | 'publishedAt'
-    | 'createdAt'
-    | 'views'
-    | 'reactionsCount'
-    | 'commentsCount';
+  | "publishedAt"
+  | "createdAt"
+  | "views"
+  | "reactionsCount"
+  | "commentsCount";
 
-export type SortOrder = 'asc' | 'desc';
+export type SortOrder = "asc" | "desc";
 
-export type PostInclude = 'author' | 'comments' | 'category';
+export type PostInclude = "author" | "comments" | "category" | "favorites";
 
 export interface PostListQuery {
-    search?: string;
-    authorId?: number;
-    category?: string | null;
-    tags?: string[];
-    status?: PostStatus;
-    visibility?: PostVisibility;
-    publishedOnly?: boolean;
-    dateFrom?: Date;
-    dateTo?: Date;
-    sortBy?: PostSortBy;
-    order?: SortOrder;
-    cursor?: string;
-    take?: number;
-    includes?: PostInclude[];
+  search?: string;
+  authorId?: number;
+  category?: string | null;
+  tags?: string[];
+  status?: PostStatus;
+  visibility?: PostVisibility;
+  publishedOnly?: boolean;
+  dateFrom?: Date;
+  dateTo?: Date;
+  sortBy?: PostSortBy;
+  order?: SortOrder;
+  cursor?: string;
+  take?: number;
+  includes?: PostInclude[];
+  userId?: number; // ID del usuario autenticado (para saber si es favorito)
 }
 
 export interface PagedResult<T> {
-    items: T[];
+  items: T[];
+  nextCursor: string | null;
+  metadata: {
+    totalPages: number;
+    currentPage: number;
+    nextPage: number | null;
+    previousPage: number | null;
+  };
+}
+
+export interface PostsOldData {
+  pages: {
+    items: Post[];
     nextCursor: string | null;
     metadata: {
-        totalPages: number;
-        currentPage: number;
-        nextPage: number | null;
-        previousPage: number | null;
-    }
+      totalPages: number;
+      currentPage: number;
+      nextPage: number | null;
+      previousPage: number | null;
+    };
+  }[];
+  pageParams: (string | null)[];
 }
