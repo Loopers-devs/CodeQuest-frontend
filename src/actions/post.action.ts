@@ -1,5 +1,5 @@
 "use server";
-import { Post, PostListQuery } from "@/interfaces";
+import { PagedResult, Post, PostListQuery } from "@/interfaces";
 import { serverAuthFetchWithRefresh } from "@/lib/serverAuthFetch";
 import { CreatePostSchema } from "@/schema/post";
 import { revalidatePath } from "next/cache";
@@ -96,4 +96,41 @@ export async function getPostBySlugAction(slug: string) {
     const data = await res.json();
 
     return data as Post;
+}
+
+export async function getAllPostsAction(postListQuery: PostListQuery) {
+
+    const url = buildUrlWithParams('/posts', postListQuery);
+
+    const res = await serverAuthFetchWithRefresh(url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+
+    if (!res.ok) {
+        throw new Error('Error fetching all posts');
+    }
+
+    const data = await res.json();
+
+    return data as PagedResult<Post>;
+}
+
+
+const buildUrlWithParams = (baseUrl: string, searchParams?: PostListQuery) => {
+    const params = new URLSearchParams();
+
+    Object.entries(searchParams ?? {}).forEach(([key, value]) => {
+        if (!value) return;
+        
+        params.append(key, String(value));
+    })
+
+    const queryString = params.toString();
+
+    return queryString ? `${baseUrl}?${queryString}` : baseUrl;
+
+
 }

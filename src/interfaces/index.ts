@@ -65,7 +65,7 @@ export interface Post {
 
     // Autor
     authorId: number;
-    author?: User; // puede venir expandido o solo el id
+    author?: Pick<User, 'id' | 'fullName' | 'nickname' | 'image'>; // puede venir expandido o solo el id
 }
 
 export type PostSortBy =
@@ -76,6 +76,8 @@ export type PostSortBy =
     | 'commentsCount';
 
 export type SortOrder = 'asc' | 'desc';
+
+export type PostInclude = 'author' | 'comments' | 'category';
 
 export interface PostListQuery {
     search?: string;
@@ -91,4 +93,16 @@ export interface PostListQuery {
     order?: SortOrder;
     cursor?: string;
     take?: number;
+    includes?: PostInclude[];
+}
+
+export interface PagedResult<T> {
+    items: T[];
+    nextCursor: string | null;
+    metadata: {
+        totalPages: number;
+        currentPage: number;
+        nextPage: number | null;
+        previousPage: number | null;
+    }
 }

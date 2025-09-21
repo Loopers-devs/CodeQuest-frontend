@@ -36,6 +36,7 @@ export async function serverAuthFetchWithRefresh(route: BackendRoute, init: Requ
   const opts: RequestInit = {
     ...init,
     headers,
+    cache: process.env.NODE_ENV === 'production' ? 'force-cache' : 'no-store',
   };
 
   // 1. Realiza la petición original
