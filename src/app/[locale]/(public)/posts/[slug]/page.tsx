@@ -157,7 +157,7 @@ export default async function PostPage({ params }: Props) {
             </div>
 
             <div id="comments">
-              <Comments />
+              <Comments postId={post.id} totalComments={post.commentsCount} />
             </div>
           </div>
         </CardContent>

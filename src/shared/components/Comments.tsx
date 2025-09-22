@@ -14,112 +14,61 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { MessageCircle, Reply, Edit, Trash2, User } from "lucide-react";
+import { useCreateComment, usePostComments } from "@/hooks/use-comment";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Comment } from "@/interfaces";
+import { useAuth } from "@/providers/AuthProvider";
 
-interface Comment {
-  id: string;
-  author: string;
-  avatar?: string;
-  content: string;
-  createdAt: Date;
-  parentId?: string;
-  replies?: Comment[];
+interface Props {
+  postId: string;
+  totalComments?: number;
 }
 
-const mockComments: Comment[] = [
-  {
-    id: "1",
-    author: "Juan Pérez",
-    avatar: "",
-    content: "¡Excelente artículo! Me ha ayudado mucho a entender el tema.",
-    createdAt: new Date("2024-09-20T10:30:00"),
-    replies: [
-      {
-        id: "1-1",
-        author: "María García",
-        avatar: "",
-        content: "Estoy de acuerdo, la explicación es muy clara.",
-        createdAt: new Date("2024-09-20T11:15:00"),
-        parentId: "1",
-      },
-      {
-        id: "1-2",
-        author: "Carlos López",
-        avatar: "",
-        content: "Gracias por el feedback, me alegra que te haya sido útil.",
-        createdAt: new Date("2024-09-20T12:00:00"),
-        parentId: "1",
-      },
-    ],
-  },
-  {
-    id: "2",
-    author: "Ana Rodríguez",
-    avatar: "",
-    content: "Tengo una duda sobre el punto 3. ¿Podrías aclararlo?",
-    createdAt: new Date("2024-09-20T14:20:00"),
-  },
-  {
-    id: "3",
-    author: "Pedro Sánchez",
-    avatar: "",
-    content: "Muy buen contenido, lo compartiré con mis colegas.",
-    createdAt: new Date("2024-09-20T16:45:00"),
-    replies: [
-      {
-        id: "3-1",
-        author: "Laura Martín",
-        avatar: "",
-        content: "¡Gracias por compartir! Me interesa mucho el tema.",
-        createdAt: new Date("2024-09-20T17:30:00"),
-        parentId: "3",
-      },
-    ],
-  },
-];
-
-export default function Comments() {
-  const [comments, setComments] = useState<Comment[]>(mockComments);
+export default function Comments({ postId, totalComments }: Props) {
   const [newComment, setNewComment] = useState("");
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [replyContent, setReplyContent] = useState("");
 
+  const session = useAuth();
+
+  const { data, isLoading } = usePostComments({ postId, pageSize: 20 });
+
+  const { mutate: createComment, isPending: isCreating } = useCreateComment();
+
+  const flatItems = data?.pages.flatMap((p) => p.items) ?? [];
+
   const handleAddComment = () => {
-    if (!newComment.trim()) return;
+    if (!newComment.trim() || !session?.user) return;
 
-    const comment: Comment = {
-      id: Date.now().toString(),
-      author: "Usuario Actual",
-      content: newComment,
-      createdAt: new Date(),
-    };
-
-    setComments([comment, ...comments]);
-    setNewComment("");
+    createComment(
+      {
+        postId,
+        content: newComment,
+      },
+      {
+        onSuccess: () => {
+          setNewComment("");
+        },
+      }
+    );
   };
 
   const handleReply = (parentId: string) => {
-    if (!replyContent.trim()) return;
+    if (!replyContent.trim() || !session?.user) return;
 
-    const reply: Comment = {
-      id: `${parentId}-${Date.now()}`,
-      author: "Usuario Actual",
-      content: replyContent,
-      createdAt: new Date(),
-      parentId,
-    };
-
-    setComments(comments.map(comment => {
-      if (comment.id === parentId) {
-        return {
-          ...comment,
-          replies: [...(comment.replies || []), reply],
-        };
+    createComment(
+      {
+        postId,
+        content: replyContent,
+        parentId,
+      },
+      {
+        onSuccess: () => {
+          setReplyingTo(null);
+          setReplyContent("");
+        },
       }
-      return comment;
-    }));
-
-    setReplyingTo(null);
-    setReplyContent("");
+    );
   };
 
   const formatDate = (date: Date) => {
@@ -132,31 +81,48 @@ export default function Comments() {
     });
   };
 
-  const CommentItem = ({ comment, isReply = false }: { comment: Comment; isReply?: boolean }) => (
+  const CommentItem = ({
+    comment,
+    isReply = false,
+  }: {
+    comment: Comment;
+    isReply?: boolean;
+  }) => (
     <ContextMenu>
       <ContextMenuTrigger>
         <div className={`flex gap-3 ${isReply ? "ml-12" : ""}`}>
           <Avatar className="w-8 h-8">
-            <AvatarImage src={comment.avatar} alt={comment.author} />
+            <AvatarImage
+              src={comment.author.image || undefined}
+              alt={comment.author.fullName}
+            />
             <AvatarFallback>
               <User className="w-4 h-4" />
             </AvatarFallback>
           </Avatar>
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
-              <span className="font-medium text-sm">{comment.author}</span>
-              {isReply && <Badge variant="secondary" className="text-xs">Respuesta</Badge>}
+              <span className="font-medium text-sm">
+                {comment.author.fullName}
+              </span>
+              {isReply && (
+                <Badge variant="secondary" className="text-xs">
+                  Respuesta
+                </Badge>
+              )}
               <span className="text-xs text-muted-foreground">
-                {formatDate(comment.createdAt)}
+                {formatDate(new Date(comment.createdAt))}
               </span>
             </div>
             <p className="text-sm text-foreground mb-2">{comment.content}</p>
-            {!isReply && (
+            {(!isReply && session.user?.email) && (
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-6 px-2 text-xs"
-                onClick={() => setReplyingTo(replyingTo === comment.id ? null : comment.id)}
+                className="h-6 px-2 text-xs my-4"
+                onClick={() =>
+                  setReplyingTo(replyingTo === comment.id ? null : comment.id)
+                }
               >
                 <Reply className="w-3 h-3 mr-1" />
                 Responder
@@ -178,36 +144,68 @@ export default function Comments() {
     </ContextMenu>
   );
 
+  if (isLoading) {
+    return (
+      <Card className="w-full mx-auto">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <MessageCircle className="w-5 h-5" />
+            <h3 className="text-lg font-semibold">Comentarios</h3>
+            <Badge variant="secondary">0</Badge>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <Skeleton className="h-10 w-full" />
+          <Separator />
+          <div className="space-y-4">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="space-y-3">
+                <Skeleton className="h-8 w-full" />
+                <Skeleton className="h-6 w-3/4" />
+                <Separator />
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Card className="w-full mx-auto">
       <CardHeader>
         <div className="flex items-center gap-2">
           <MessageCircle className="w-5 h-5" />
           <h3 className="text-lg font-semibold">Comentarios</h3>
-          <Badge variant="secondary">{comments.length}</Badge>
+          <Badge variant="secondary">{totalComments}</Badge>
         </div>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Formulario para nuevo comentario */}
-        <div className="space-y-3">
-          <Textarea
-            placeholder="Escribe un comentario..."
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            className="min-h-[80px]"
-          />
-          <div className="flex justify-end">
-            <Button onClick={handleAddComment} disabled={!newComment.trim()}>
-              Publicar comentario
-            </Button>
+        {session.user?.email && (
+          <div className="space-y-3">
+            <Textarea
+              placeholder="Escribe un comentario..."
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              className="min-h-[80px]"
+            />
+            <div className="flex justify-end">
+              <Button
+                onClick={handleAddComment}
+                disabled={!newComment.trim() || isCreating}
+              >
+                Publicar comentario
+              </Button>
+            </div>
           </div>
-        </div>
+        )}
 
         <Separator />
 
         {/* Lista de comentarios */}
         <div className="space-y-4">
-          {comments.map((comment) => (
+          {flatItems.map((comment) => (
             <div key={comment.id} className="space-y-3">
               <CommentItem comment={comment} />
               {replyingTo === comment.id && (
@@ -232,16 +230,16 @@ export default function Comments() {
                     <Button
                       size="sm"
                       onClick={() => handleReply(comment.id)}
-                      disabled={!replyContent.trim()}
+                      disabled={!replyContent.trim() || isCreating}
                     >
                       Responder
                     </Button>
                   </div>
                 </div>
               )}
-              {comment.replies && comment.replies.length > 0 && (
-                <div className="space-y-3">
-                  {comment.replies.map((reply) => (
+              {comment.children && comment.children.length > 0 && (
+                <div className="space-y-3 mt-2">
+                  {comment.children.map((reply) => (
                     <CommentItem key={reply.id} comment={reply} isReply />
                   ))}
                 </div>

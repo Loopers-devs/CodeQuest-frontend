@@ -86,8 +86,8 @@ export interface PostListQuery {
   authorId?: number;
   category?: string | null;
   tags?: string[];
-  status?: PostStatus;
-  visibility?: PostVisibility;
+  status?: `${PostStatus}`;
+  visibility?: `${PostVisibility}`;
   publishedOnly?: boolean;
   dateFrom?: Date;
   dateTo?: Date;
@@ -151,3 +151,34 @@ export type CategoryListQuery = {
   page?: number; // para paginación basada en páginas
   pageSize?: number; // tamaño de página
 };
+
+export interface CommentListQuery {
+  page?: number;
+  pageSize?: number;
+  search?: string;
+  parentId?: string;
+  postId: string;
+}
+
+export interface Comment {
+  id: string;
+  postId: string;
+  authorId: number;
+  author: Pick<User, "id" | "fullName" | "nickname" | "image">;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt?: Date | null;
+
+  children?: Comment[];
+}
+
+export interface PageResponse<T> {
+  items: T[];
+  page: number;
+  pageSize: number;
+  total: number;
+  totalPages: number;
+  hasNext: boolean;
+  hasPrev: boolean;
+}
