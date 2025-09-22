@@ -44,7 +44,7 @@ const PostCard = ({ post }: PostCardProps) => {
           <FavoriteToggle postId={post.id} isFavorite={post.isFavorited} />
         </div>
 
-        <Link href={`/post/${post.slug}`}>
+        <Link href={`/posts/${post.slug}`}>
           <div>
             <h3 className="text-xl font-semibold leading-tight text-card-foreground hover:text-primary transition-smooth line-clamp-2">
               {post.title}

@@ -203,5 +203,29 @@
         "searchPlaceholder": "Buscar categorías..."
       }
     }
+  },
+
+  "posts": {
+    "title": "Publicaciones",
+    "description": "Descubre y explora publicaciones de nuestra comunidad",
+    "filters": "Filtros",
+    "search": "Buscar",
+    "searchPlaceholder": "Buscar publicaciones...",
+    "sortBy": "Ordenar por",
+    "order": "Orden",
+    "publishedAt": "Fecha de publicación",
+    "views": "Vistas",
+    "reactions": "Reacciones",
+    "comments": "Comentarios",
+    "descending": "Descendente",
+    "ascending": "Ascendente",
+    "showingPosts": "Mostrando {count} publicaciones",
+    "noPostsFound": "No se encontraron publicaciones",
+    "loadMore": "Cargar Más",
+    "loading": "Cargando...",
+    "errorLoadingPosts": "Error al cargar las publicaciones",
+    "applyFilters": "Aplicar",
+    "clearFilters": "Limpiar",
+    "backToHome": "Volver al inicio"
   }
 }

@@ -43,7 +43,6 @@ export interface Post {
 
   // Clasificación y búsqueda
   category?: string | null;
-  tags: string[];
 
   // Publicación
   status: PostStatus;
@@ -68,6 +67,7 @@ export interface Post {
   // Favoritos
   favoritedBy?: { userId: number }[]; // para saber si el usuario autenticado ha marcado como favorito
   isFavorited: boolean; // campo calculado para indicar si el usuario autenticado ha marcado como favorito
+  tags?: { id: string; name: string }[]; // tags asociadas al post
 }
 
 export type PostSortBy =

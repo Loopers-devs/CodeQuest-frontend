@@ -149,5 +149,29 @@
         "updatePostNotFound": "Post not found. It might have been deleted."
       }
     }
+  },
+
+  "posts": {
+    "title": "Posts",
+    "description": "Discover and explore published posts from our community",
+    "filters": "Filters",
+    "search": "Search",
+    "searchPlaceholder": "Search posts...",
+    "sortBy": "Sort by",
+    "order": "Order",
+    "publishedAt": "Published date",
+    "views": "Views",
+    "reactions": "Reactions",
+    "comments": "Comments",
+    "descending": "Descending",
+    "ascending": "Ascending",
+    "showingPosts": "Showing {count} posts",
+    "noPostsFound": "No posts found",
+    "loadMore": "Load More",
+    "loading": "Loading...",
+    "errorLoadingPosts": "Error loading posts",
+    "applyFilters": "Apply",
+    "clearFilters": "Clear",
+    "backToHome": "Back to Home"
   }
 }

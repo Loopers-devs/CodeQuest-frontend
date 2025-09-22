@@ -6,6 +6,13 @@ import { usePosts } from "@/hooks/use-post";
 import React from "react";
 import { useTranslations } from "next-intl";
 import { useAuth } from "@/providers/AuthProvider";
+import { Skeleton } from "@/components/ui/skeleton";
+
+const SkeletonPost = () => {
+  return (
+    <Skeleton className="h-72 w-full rounded-lg" />
+  );
+};
 
 export default function PostList() {
 
@@ -22,8 +29,18 @@ export default function PostList() {
   return (
     <>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
-        {data?.pages.map((page) =>
-          page?.items.map((post) => <PostCard key={post.id} post={post} />)
+        {(isLoading || isFetching) ? (
+          <>
+            {Array.from({ length: 4 }).map((_, index) => (
+              <SkeletonPost key={index} />
+            ))}
+          </>
+        ) : (
+          <>
+            {data?.pages.map((page) =>
+              page?.items.map((post) => <PostCard key={post.id} post={post} />)
+            )}
+          </>
         )}
       </div>
 

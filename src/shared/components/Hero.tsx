@@ -1,10 +1,17 @@
+"use client";
 import { Button } from "@/components/ui/button";
+import { usePathname } from "@/i18n/navigation";
 import { ArrowRight, Sparkles } from "lucide-react";
-import heroImage from "@/assets/hero-bg.jpg";
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 
-const Hero = async () => {
-    const t = await getTranslations('HomePage')
+const Hero = () => {
+    const t = useTranslations("HomePage");
+
+    const pathname = usePathname();
+
+    if (pathname !== "/") {
+        return null;
+    }
 
     return (
         <section className="relative overflow-hidden bg-gradient-to-b from-background to-muted/30">
