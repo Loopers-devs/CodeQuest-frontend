@@ -14,6 +14,8 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { FavoriteToggle } from "./FavoriteToggle";
 import Link from "next/link";
+import { useAddPostToLikes, useRemovePostFromLikes } from "@/hooks/use-post";
+import { useAuth } from "@/providers/AuthProvider";
 // import { Link } from "react-router-dom";
 
 interface PostCardProps {
@@ -23,6 +25,24 @@ interface PostCardProps {
 const PostCard = ({ post }: PostCardProps) => {
   const name =
     post.author?.fullName || post.author?.nickname || "Autor Desconocido";
+
+  const session = useAuth();  
+
+  const { mutate: addPostToLikes } = useAddPostToLikes(post.id);
+  const { mutate: removePostFromLikes } = useRemovePostFromLikes(post.id);
+
+  const isLiked = post?.likedBy?.find((like) => like.userId === session.user?.id) ? true : false;
+
+  const toggleLiked = () => {
+
+    if (!session.user?.id) return;
+
+    if (!isLiked) {
+      return addPostToLikes()
+    }
+
+    return removePostFromLikes()
+  }
 
   return (
     <Card className="group overflow-hidden border-0 bg-card shadow-card hover:shadow-elevated transition-smooth hover:-translate-y-1 pt-0">
@@ -100,7 +120,11 @@ const PostCard = ({ post }: PostCardProps) => {
           <Button
             variant="ghost"
             size="sm"
-            className={cn("h-8 px-2 hover:text-red-500 transition-smooth")}
+            className={cn("h-8 px-2 hover:text-red-500 transition-smooth", {
+              "text-red-500": isLiked,
+            })}
+            onClick={() => toggleLiked()}
+            disabled={!session.user?.id}
           >
             <Heart className="h-4 w-4 mr-1" />
             <span className="text-xs">{post.reactionsCount}</span>

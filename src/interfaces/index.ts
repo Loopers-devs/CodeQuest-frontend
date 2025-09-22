@@ -68,6 +68,8 @@ export interface Post {
   favoritedBy?: { userId: number }[]; // para saber si el usuario autenticado ha marcado como favorito
   isFavorited: boolean; // campo calculado para indicar si el usuario autenticado ha marcado como favorito
   tags?: { id: string; name: string }[]; // tags asociadas al post
+
+  likedBy?: { userId: number }[]; // para saber si el usuario autenticado ha dado like
 }
 
 export type PostSortBy =

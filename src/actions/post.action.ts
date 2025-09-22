@@ -1,8 +1,11 @@
 "use server";
 import { PagedResult, Post, PostListQuery } from "@/interfaces";
+import { buildUrlWithParams } from "@/lib/build-url-with-params";
 import { serverAuthFetchWithRefresh } from "@/lib/serverAuthFetch";
 import { CreatePostSchema } from "@/schema/post";
 import { revalidatePath } from "next/cache";
+
+const URL_POSTS_LIKE = "/like";
 
 export async function createPostAction(
   inputs: CreatePostSchema
@@ -113,6 +116,7 @@ export async function getAllPostsAction(postListQuery: PostListQuery) {
     throw new Error("Error fetching all posts");
   }
 
+
   const data = await res.json();
 
   return data as PagedResult<Post>;
@@ -172,17 +176,33 @@ export async function getFavoritePostsByUser({ take, cursor }: { take?: number; 
   return data as { items: Post[]; nextCursor: string | null};
 }
 
-
-const buildUrlWithParams = (baseUrl: string, searchParams?: PostListQuery) => {
-  const params = new URLSearchParams();
-
-  Object.entries(searchParams ?? {}).forEach(([key, value]) => {
-    if (!value) return;
-
-    params.append(key, String(value));
+// Likes
+export async function addPostToLikesAction(postId: string) {
+  const res = await serverAuthFetchWithRefresh(`${URL_POSTS_LIKE}/${postId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 
-  const queryString = params.toString();
+  if (!res.ok) {
+    throw new Error("Error adding post to favorites");
+  }
 
-  return queryString ? `${baseUrl}?${queryString}` : baseUrl;
-};
+  return await res.json();
+}
+
+export async function removePostFromLikesAction(postId: string) {
+  const res = await serverAuthFetchWithRefresh(`${URL_POSTS_LIKE}/${postId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("Error removing post from likes");
+  }
+
+  return await res.json();
+}

@@ -1,8 +1,10 @@
 import {
   addPostToFavorites,
+  addPostToLikesAction,
   getAllPostsAction,
   getFavoritePostsByUser,
   removePostFromFavorites,
+  removePostFromLikesAction,
 } from "@/actions/post.action";
 import { Post, PostListQuery, PostsOldData } from "@/interfaces";
 import { useAuth } from "@/providers/AuthProvider";
@@ -134,3 +136,20 @@ export const useFavoritePosts = ({
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
   });
 };
+
+// ===================== Like Posts =====================
+export const useAddPostToLikes = (postId: string) => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async () => await addPostToLikesAction(postId),
+  })
+}
+
+export const useRemovePostFromLikes = (postId: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async () => await removePostFromLikesAction(postId),
+  })
+}

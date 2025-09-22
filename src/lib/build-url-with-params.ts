@@ -1,4 +1,4 @@
-export const buildUrlWithParams = (baseUrl: string, searchParams?: Record<string, string | number | boolean>) => {
+export const buildUrlWithParams = (baseUrl: string, searchParams?: unknown) => {
   const params = new URLSearchParams();
 
   Object.entries(searchParams ?? {}).forEach(([key, value]) => {
