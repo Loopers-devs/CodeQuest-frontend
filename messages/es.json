@@ -284,5 +284,10 @@
       "tutorials": "Tutoriales",
       "news": "Noticias"
     }
+  },
+  "NotFound": {
+    "title": "404 - Página no encontrada",
+    "description": "Vaya, la página que buscas no existe o ha sido movida. Comprueba la URL o vuelve al inicio.",
+    "backToHome": "Volver al inicio"
   }
 }

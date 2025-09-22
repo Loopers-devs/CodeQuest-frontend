@@ -4,6 +4,7 @@ import { buildUrlWithParams } from "@/lib/build-url-with-params";
 import { serverAuthFetchWithRefresh } from "@/lib/serverAuthFetch";
 import { CreatePostSchema } from "@/schema/post";
 import { revalidatePath } from "next/cache";
+import { notFound } from "next/navigation";
 
 const URL_POSTS_LIKE = "/like";
 
@@ -94,7 +95,7 @@ export async function getPostBySlugAction(slug: string) {
   });
 
   if (!res.ok) {
-    throw new Error("Error fetching post by slug");
+    notFound();
   }
 
   const data = await res.json();
