@@ -1,4 +1,4 @@
-import { BookmarkPlus, LayoutDashboardIcon, ListIcon, UserCog } from "lucide-react"
+import { BookmarkPlus, LayoutDashboardIcon, ListIcon, UserCog, UserCog2Icon } from "lucide-react"
 
 export const routes = {
     home: '/',
@@ -29,6 +29,29 @@ export const sidebarRoutes = [
     {
         title: 'favorites',
         href: routes.favorites,
+        icon: BookmarkPlus
+    }
+]
+
+export const adminSidebarRoutes = [
+    {
+        title: 'dashboard',
+        href: '/admin',
+        icon: LayoutDashboardIcon
+    },
+    {
+        title: 'managePosts',
+        href: '/admin/posts',
+        icon: ListIcon
+    },
+    {
+        title: 'manageUsers',
+        href: '/admin/users',
+        icon: UserCog2Icon
+    },
+    {
+        title: 'categories',
+        href: '/admin/categories',
         icon: BookmarkPlus
     }
 ]

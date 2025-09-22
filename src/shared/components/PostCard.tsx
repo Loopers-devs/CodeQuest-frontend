@@ -8,6 +8,7 @@ import { Post } from "@/interfaces";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { FavoriteToggle } from "./FavoriteToggle";
+import Link from "next/link";
 // import { Link } from "react-router-dom";
 
 interface PostCardProps {
@@ -40,19 +41,16 @@ const PostCard = ({ post }: PostCardProps) => {
           >
             {post.category}
           </Badge>
-          <FavoriteToggle
-            postId={post.id}
-            isFavorite={post.isFavorited}
-          />
+          <FavoriteToggle postId={post.id} isFavorite={post.isFavorited} />
         </div>
 
-        {/* <Link to={`/post/${id}`}> */}
-        <div>
-          <h3 className="text-xl font-semibold leading-tight text-card-foreground hover:text-primary transition-smooth line-clamp-2">
-            {post.title}
-          </h3>
-          {/* </Link> */}
-        </div>
+        <Link href={`/post/${post.slug}`}>
+          <div>
+            <h3 className="text-xl font-semibold leading-tight text-card-foreground hover:text-primary transition-smooth line-clamp-2">
+              {post.title}
+            </h3>
+          </div>
+        </Link>
       </CardHeader>
 
       <CardContent className="pt-0">

@@ -1,17 +1,20 @@
-import React from "react";
+import CustomHeader from "@/components/custom-hader";
+import { CustomSidebar } from "@/components/custom-sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { adminSidebarRoutes } from "@/config/routes";
 
 export default function AdminLayout({
-    children,
+  children,
 }: {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-    return (
-        <html lang="en">
-            <body>
-                <div className="admin-container">
-                    {children}
-                </div>
-            </body>
-        </html>
-    );
+  return (
+    <SidebarProvider>
+      <CustomSidebar sidebarRoutes={adminSidebarRoutes} />
+      <div className="w-full">
+        <CustomHeader />
+        <main className="container mx-auto p-4">{children}</main>
+      </div>
+    </SidebarProvider>
+  );
 }

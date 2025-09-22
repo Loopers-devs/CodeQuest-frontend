@@ -76,6 +76,11 @@
     "profile": "Perfil",
     "favorites": "Favoritos",
 
+    "dashboard": "Panel",
+    "managePosts": "Publicaciones",
+    "manageUsers": "Usuarios",
+    "categories": "Categorías",
+
     "logout": "Cerrar sesión"
   },
 
@@ -164,6 +169,38 @@
         "updatePostSuccess": "Publicación actualizada con éxito.",
         "updatePostError": "No se pudo actualizar la publicación. Por favor, inténtalo de nuevo.",
         "updatePostNotFound": "Publicación no encontrada. Puede haber sido eliminada."
+      }
+    },
+    "categories": {
+      "columns": {
+        "name": "Nombre",
+        "description": "Descripción",
+        "posts": "Publicaciones",
+        "actions": "Acciones"
+      },
+      "filters": {
+        "searchPlaceholder": "Buscar categorías..."
+      },
+      "form": {
+        "createCategory": "Crear categoría",
+        "updateCategory": "Actualizar categoría",
+        "createSuccess": "Categoría creada con éxito.",
+        "updateSuccess": "Categoría actualizada con éxito.",
+        "createError": "No se pudo crear la categoría. Inténtalo de nuevo.",
+        "updateError": "No se pudo actualizar la categoría. Inténtalo de nuevo."
+      }
+    }
+  },
+  "admin": {
+    "categories": {
+      "columns": {
+        "name": "Nombre",
+        "description": "Descripción",
+        "posts": "Publicaciones",
+        "actions": "Acciones"
+      },
+      "filters": {
+        "searchPlaceholder": "Buscar categorías..."
       }
     }
   }

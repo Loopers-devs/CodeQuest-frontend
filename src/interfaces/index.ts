@@ -123,3 +123,31 @@ export interface PostsOldData {
   }[];
   pageParams: (string | null)[];
 }
+
+export interface Category {
+  id: string;
+  name: string;
+  description?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt?: string | null;
+  posts?: Array<{ id: string }>;
+}
+
+export type CategoryListQuery = {
+  cursor?: string;
+  search?: string;
+  // authorId se usa en getCategoriesByUserAction si necesitas filtrar por autor
+  authorId?: string;
+  // Opcional: permitir orden o inclusión de eliminados en futuras peticiones
+  orderBy?: string;
+  includeDeleted?: boolean;
+
+  limit?: number; // para compatibilidad con algunos hooks
+  after?: string; // cursor para paginación
+  sortBy?: string; // campo para ordenar
+  sortOrder?: 'asc' | 'desc'; // orden de clasificación
+
+  page?: number; // para paginación basada en páginas
+  pageSize?: number; // tamaño de página
+};
