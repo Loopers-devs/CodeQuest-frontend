@@ -18,7 +18,7 @@ export const usePosts = (postListQuery: PostListQuery) => {
   const session = useAuth();
 
   return useInfiniteQuery({
-    queryKey: ["posts"],
+    queryKey: ["posts", postListQuery],
     initialPageParam: undefined,
     queryFn: async ({ pageParam }: { pageParam: string | undefined }) =>
       await getAllPostsAction({ ...postListQuery, cursor: pageParam }),
@@ -37,7 +37,10 @@ export const useAddPostToFavorites = (postId: string) => {
   return useMutation({
     mutationFn: async () => await addPostToFavorites(postId),
     onSuccess: () => {
-      queryClient.setQueryData(["posts"], (oldData?: PostsOldData) => {
+      queryClient.setQueriesData({ 
+        queryKey: ["posts"],
+        exact: false
+       }, (oldData?: PostsOldData) => {
         if (!oldData) return oldData;
 
         const items: Post[] = oldData.pages.flatMap((page) => page.items);
@@ -77,7 +80,10 @@ export const useRemovePostFromFavorites = (postId: string) => {
   return useMutation({
     mutationFn: async () => await removePostFromFavorites(postId),
     onSuccess: () => {
-      queryClient.setQueryData(["posts"], (oldData?: PostsOldData) => {
+      queryClient.setQueriesData({ 
+        queryKey: ["posts"],
+        exact: false
+       }, (oldData?: PostsOldData) => {
         if (!oldData) return oldData;
 
         const items: Post[] = oldData.pages.flatMap((page) => page.items);
@@ -145,7 +151,10 @@ export const useAddPostToLikes = (postId: string) => {
   return useMutation({
     mutationFn: async () => await addPostToLikesAction(postId),
     onSuccess: (data) => {
-      queryClient.setQueryData(["posts"], (oldData?: PostsOldData) => {
+      queryClient.setQueriesData({ 
+        queryKey: ["posts"],
+        exact: false
+       }, (oldData?: PostsOldData) => {
         if (!oldData) return oldData;
 
         return {
@@ -172,7 +181,10 @@ export const useRemovePostFromLikes = (postId: string) => {
   return useMutation({
     mutationFn: async () => await removePostFromLikesAction(postId),
     onSuccess: () => {
-      queryClient.setQueryData(["posts"], (oldData?: PostsOldData) => {
+      queryClient.setQueriesData({ 
+        queryKey: ["posts"],
+        exact: false
+       }, (oldData?: PostsOldData) => {
         if (!oldData) return oldData;
         return {
           ...oldData,

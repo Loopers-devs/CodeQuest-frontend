@@ -63,7 +63,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
   const query = buildQueryFromSearchParams(params);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
@@ -71,7 +71,9 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
               <h1 className="text-4xl font-bold text-foreground mb-2">
                 {t("title")}
               </h1>
-              <p className="text-lg text-muted-foreground">{t("description")}</p>
+              <p className="text-lg text-muted-foreground">
+                {t("description")}
+              </p>
             </div>
             <Button asChild variant="outline" size="sm">
               <Link href="/" className="flex items-center gap-2">
@@ -84,16 +86,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
 
         <PostsFilters searchParams={params} />
 
-        <Suspense fallback={
-          <div className="flex justify-center items-center min-h-[400px]">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-              <p className="text-muted-foreground">{t("loading") || "Cargando posts..."}</p>
-            </div>
-          </div>
-        }>
-          <PostsListClient initialQuery={query} />
-        </Suspense>
+        <PostsListClient initialQuery={query} />
       </div>
     </div>
   );
