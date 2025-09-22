@@ -1,10 +1,26 @@
 {
   "HomePage": {
+    "meta-title": "CodeQuest - Stories that Inspire",
+    "meta-description": "Explore a curated collection of articles, tutorials, and stories from developers, designers, and creators around the world.",
     "welcome": "Welcome to CodeQuest!",
-    "title-eslogan": "Ideas that inspire",
+    "title-eslogan": "Ideas that Inspire",
     "subtitle-eslogan": "stories that connect",
-    "paragraph-title": "Explore a curated collection of articles, tutorials, and stories from developers, designers, and creators from around the world.",
-    "span-up-title": "Discover incredible stories"
+    "paragraph-title": "Explore a curated collection of articles, tutorials, and stories from developers, designers, and creators around the world.",
+    "span-up-title": "Discover amazing stories",
+    "view-all": "View all",
+    "load-more": "Load more posts",
+    "latest-posts": "Featured Posts",
+    "read-more": "Start reading",
+    "write-my-story": "Write my story",
+    "header": {
+      "login": "Login",
+      "write": "Write",
+      "myAccount": "My Account",
+      "dashboard": "Dashboard",
+      "myPosts": "My Posts",
+      "favorites": "Favorites",
+      "logout": "Logout"
+    }
   },
   "LoginPage": {
     "welcome": "Welcome to CodeQuest!",
@@ -12,10 +28,10 @@
     "email": "Email",
     "password": "Password",
     "loginButton": "Login",
-    "forgotPassword": "Forgot Password?",
-    "registerPrompt": "Don't have an account? Register",
+    "forgotPassword": "Forgot your password?",
+    "registerPrompt": "Don't have an account? Sign up",
     "submit": "Login",
-    "noAccount": "Don't have an account? Register",
+    "noAccount": "Don't have an account? Sign up",
 
     "invalidEmail": "Invalid email address",
     "minLength": "Minimum length is {min} characters",
@@ -23,17 +39,17 @@
   },
   "RegisterPage": {
     "welcome": "Create your account",
-    "description": "Register to start your adventure.",
-    "fullName": "Full Name",
+    "description": "Sign up to start your adventure.",
+    "fullName": "Full name",
     "email": "Email",
     "password": "Password",
-    "confirmPassword": "Confirm Password",
+    "confirmPassword": "Confirm password",
     "submit": "Register",
     "invalidEmail": "Invalid email address",
     "minLength": "Minimum length is {min} characters",
     "maxLength": "Maximum length is {max} characters",
     "passwordsDoNotMatch": "Passwords do not match",
-    "alreadyHaveAccount": "Already have an account? Login"
+    "alreadyHaveAccount": "Already have an account? Log in"
   },
   "socialAuth": {
     "orContinueWith": "Or continue with"
@@ -46,7 +62,7 @@
     "emailInUse": "Email is already in use.",
     "registrationFailed": "Registration failed. Please try again.",
 
-    "profileError": "Failed to fetch user profile."
+    "profileError": "Could not fetch user profile."
   },
   "logout": {
     "loggingOut": "Logging out...",
@@ -56,8 +72,14 @@
   },
   "sidebar": {
     "home": "Home",
-    "myPosts": "My posts",
+    "myPosts": "My Posts",
     "profile": "Profile",
+    "favorites": "Favorites",
+
+    "dashboard": "Dashboard",
+    "managePosts": "Posts",
+    "manageUsers": "Users",
+    "categories": "Categories",
 
     "logout": "Logout"
   },
@@ -87,7 +109,7 @@
       "updateProfileInformation": "Update your personal information"
     },
     "posts": {
-      "createPost": "Create Post",
+      "createPost": "Create post",
       "columns": {
         "title": "Title",
         "status": "Status",
@@ -116,7 +138,7 @@
       },
       "form": {
         "postInformation": "Post information",
-        "postInformationDescription": "Add the title, summary and the main content of your post here.",
+        "postInformationDescription": "Add the title, summary, and main content of your post here.",
         "title": "Title",
         "slug": "Slug",
         "summary": "Summary",
@@ -126,7 +148,7 @@
         "tags": "Tags",
         "category": "Category",
         "publicationSettings": "Publication settings",
-        "publicationSettingsDescription": "Control the post's status and visibility. Publish date and cover image will be available soon.",
+        "publicationSettingsDescription": "Control the status and visibility of the post. Publish date and cover image will be available soon.",
         "statusLabel": "Status",
         "visibilityLabel": "Visibility",
         "coverImage": "Cover image",
@@ -139,27 +161,59 @@
         "searchPlaceholder": "Search posts...",
         "createPostButton": "Create post",
         "createPostSuccess": "Post created successfully.",
-        "createPostError": "Failed to create the post. Please try again.",
+        "createPostError": "Could not create the post. Please try again.",
         "pageDescription": "Add your post details and configure its visibility and status from this panel.",
         "editPost": "Edit post",
-        "editPostPageDescription": "Edit the details of your post and update its visibility or status.",
+        "editPostPageDescription": "Edit your post details and update its visibility or status.",
         "updatePostButton": "Update post",
         "updatePostSuccess": "Post updated successfully.",
-        "updatePostError": "Failed to update the post. Please try again.",
-        "updatePostNotFound": "Post not found. It might have been deleted."
+        "updatePostError": "Could not update the post. Please try again.",
+        "updatePostNotFound": "Post not found. It may have been deleted."
+      }
+    },
+    "categories": {
+      "columns": {
+        "name": "Name",
+        "description": "Description",
+        "posts": "Posts",
+        "actions": "Actions"
+      },
+      "filters": {
+        "searchPlaceholder": "Search categories..."
+      },
+      "form": {
+        "createCategory": "Create category",
+        "updateCategory": "Update category",
+        "createSuccess": "Category created successfully.",
+        "updateSuccess": "Category updated successfully.",
+        "createError": "Could not create the category. Please try again.",
+        "updateError": "Could not update the category. Please try again."
+      }
+    }
+  },
+  "admin": {
+    "categories": {
+      "columns": {
+        "name": "Name",
+        "description": "Description",
+        "posts": "Posts",
+        "actions": "Actions"
+      },
+      "filters": {
+        "searchPlaceholder": "Search categories..."
       }
     }
   },
 
   "posts": {
     "title": "Posts",
-    "description": "Discover and explore published posts from our community",
+    "description": "Discover and explore posts from our community",
     "filters": "Filters",
     "search": "Search",
     "searchPlaceholder": "Search posts...",
     "sortBy": "Sort by",
     "order": "Order",
-    "publishedAt": "Published date",
+    "publishedAt": "Publish date",
     "views": "Views",
     "reactions": "Reactions",
     "comments": "Comments",
@@ -172,14 +226,14 @@
     "errorLoadingPosts": "Error loading posts",
     "applyFilters": "Apply",
     "clearFilters": "Clear",
-    "backToHome": "Back to Home"
+    "backToHome": "Back to home"
   },
 
   "createPost": {
     "title": "Create New Post",
     "subtitle": "Share your knowledge with the community",
     "basicInfo": "Basic Information",
-    "basicInfoDescription": "Complete the main data of your post",
+    "basicInfoDescription": "Complete the main details of your post",
     "postTitle": "Post Title",
     "excerpt": "Excerpt",
     "excerptPlaceholder": "Brief description of the post...",
@@ -208,7 +262,7 @@
       "edit": "Edit",
       "preview": "Preview",
       "placeholder": "Write your content here...",
-      "help": "Supports basic Markdown formatting. Use the toolbar to make it easier to edit.",
+      "help": "Supports basic Markdown formatting. Use the toolbar for easier editing.",
       "bold": "Bold",
       "italic": "Italic",
       "code": "Code",
@@ -217,8 +271,8 @@
     },
     "errors": {
       "invalidImageFile": "Please select a valid image file",
-      "imageTooLarge": "Image must be smaller than 5MB",
-      "unexpectedError": "Unexpected error creating post"
+      "imageTooLarge": "Image must be less than 5MB",
+      "unexpectedError": "Unexpected error creating the post"
     },
     "categories": {
       "technology": "Technology",
