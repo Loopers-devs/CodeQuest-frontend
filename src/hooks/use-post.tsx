@@ -140,16 +140,54 @@ export const useFavoritePosts = ({
 // ===================== Like Posts =====================
 export const useAddPostToLikes = (postId: string) => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: async () => await addPostToLikesAction(postId),
-  })
-}
+    onSuccess: (data) => {
+      queryClient.setQueryData(["posts"], (oldData?: PostsOldData) => {
+        if (!oldData) return oldData;
+
+        return {
+          ...oldData,
+          pages: oldData.pages.map((page) => ({
+            ...page,
+            items: page.items.map((item) =>
+              item.id === postId
+                ? { ...item, reactionsCount: item.reactionsCount + 1, likedBy: [...(item.likedBy || []), { userId: data.userId }] }
+                : item
+            ),
+          })),
+        };
+      });
+    },
+  });
+};
 
 export const useRemovePostFromLikes = (postId: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async () => await removePostFromLikesAction(postId),
-  })
-}
+    onSuccess: (data) => {
+      queryClient.setQueryData(["posts"], (oldData?: PostsOldData) => {
+        
+        console.log(data);
+
+        if (!oldData) return oldData;
+
+        return {
+          ...oldData,
+          pages: oldData.pages.map((page) => ({
+            ...page,
+            items: page.items.map((item) =>
+              item.id === postId
+                ? { ...item, reactionsCount: Math.max(0, item.reactionsCount - 1), likedBy: item.likedBy?.filter(like => like.userId !== data.userId) }
+                : item
+            ),
+          })),
+        }
+
+      })    
+    }
+  });
+};
