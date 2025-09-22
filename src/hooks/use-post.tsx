@@ -24,6 +24,7 @@ export const usePosts = (postListQuery: PostListQuery) => {
       await getAllPostsAction({ ...postListQuery, cursor: pageParam }),
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
     enabled: !session.loading, // Solo se ejecuta cuando isLoading es false
+    refetchOnWindowFocus: false,
   });
 };
 
@@ -166,22 +167,20 @@ export const useAddPostToLikes = (postId: string) => {
 export const useRemovePostFromLikes = (postId: string) => {
   const queryClient = useQueryClient();
 
+  const session = useAuth();
+
   return useMutation({
     mutationFn: async () => await removePostFromLikesAction(postId),
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.setQueryData(["posts"], (oldData?: PostsOldData) => {
-        
-        console.log(data);
-
         if (!oldData) return oldData;
-
         return {
           ...oldData,
           pages: oldData.pages.map((page) => ({
             ...page,
             items: page.items.map((item) =>
               item.id === postId
-                ? { ...item, reactionsCount: Math.max(0, item.reactionsCount - 1), likedBy: item.likedBy?.filter(like => like.userId !== data.userId) }
+                ? { ...item, reactionsCount: Math.max(0, item.reactionsCount - 1), likedBy: item.likedBy?.filter(like => like.userId !== session.user?.id) }
                 : item
             ),
           })),

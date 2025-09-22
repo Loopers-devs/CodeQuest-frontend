@@ -1,25 +1,23 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, User, PenTool, Heart } from "lucide-react";
+import { Search } from "lucide-react";
 import logoDevTalles from "@/assets/png/LOGO B.png";
-import Link from "next/link";
-import { routes } from "@/config/routes";
 import { getTranslations } from "next-intl/server";
 import AuthMenu from "./AuthMenu";
-// import { Link } from "react-router-dom";
+import Link from "next/link";
+import { routes } from "@/config/routes";
 
 const Header = async () => {
-
   const t = await getTranslations('HomePage.header');
 
   return (
-    <header className="flex justify-center sticky top-0 w-auto border-b backdrop-blur supports-[backdrop-filter]:bg-background/60 px-3 z-50">
+    <header className="flex justify-center sticky top-0 w-auto border-b backdrop-blur px-3 z-50 bg-gradient-to-r from-primary to-primary-glow supports-[backdrop-filter]:bg-background/60">
       <div className="container w-full flex h-16 items-center justify-between">
         {/* Logo */}
         <div className="flex items-center justify-center space-x-2">
-          <div className="flex h-40 w-40 items-center justify-center rounded-lg gradient-hero">
+          <Link href={routes.home} className="flex h-40 w-40 items-center justify-center rounded-lg gradient-hero">
             <img src={logoDevTalles.src} alt="" />
-          </div>
+          </Link>
           {/* <span className="text-2xl font-normal bg-gradient-to-r from-primary to-primary-glow bg-clip-text">
                         BLog
                     </span> */}
