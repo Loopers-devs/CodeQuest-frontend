@@ -173,5 +173,62 @@
     "applyFilters": "Apply",
     "clearFilters": "Clear",
     "backToHome": "Back to Home"
+  },
+
+  "createPost": {
+    "title": "Create New Post",
+    "subtitle": "Share your knowledge with the community",
+    "basicInfo": "Basic Information",
+    "basicInfoDescription": "Complete the main data of your post",
+    "postTitle": "Post Title",
+    "excerpt": "Excerpt",
+    "excerptPlaceholder": "Brief description of the post...",
+    "content": "Content",
+    "configuration": "Configuration",
+    "category": "Category",
+    "status": "Status",
+    "visibility": "Visibility",
+    "featuredImage": "Featured Image",
+    "dragImage": "Drag an image or click to select",
+    "selectImage": "Select Image",
+    "imageUploaded": "Image uploaded successfully",
+    "imageSelected": "Image selected for upload",
+    "uploading": "Uploading...",
+    "tags": "Tags",
+    "tagsDescription": "Add relevant tags for your post",
+    "newTag": "New tag...",
+    "publishPost": "Publish Post",
+    "preview": "Preview",
+    "edit": "Edit",
+    "previewTitle": "Post Preview",
+    "defaultContent": "Post content...",
+    "defaultTitle": "Post title",
+    "defaultExcerpt": "Post excerpt...",
+    "markdown": {
+      "edit": "Edit",
+      "preview": "Preview",
+      "placeholder": "Write your content here...",
+      "help": "Supports basic Markdown formatting. Use the toolbar to make it easier to edit.",
+      "bold": "Bold",
+      "italic": "Italic",
+      "code": "Code",
+      "link": "Link",
+      "list": "List"
+    },
+    "errors": {
+      "invalidImageFile": "Please select a valid image file",
+      "imageTooLarge": "Image must be smaller than 5MB",
+      "unexpectedError": "Unexpected error creating post"
+    },
+    "categories": {
+      "technology": "Technology",
+      "programming": "Programming",
+      "design": "Design",
+      "marketing": "Marketing",
+      "business": "Business",
+      "lifestyle": "Lifestyle",
+      "tutorials": "Tutorials",
+      "news": "News"
+    }
   }
 }

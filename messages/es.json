@@ -227,5 +227,62 @@
     "applyFilters": "Aplicar",
     "clearFilters": "Limpiar",
     "backToHome": "Volver al inicio"
+  },
+
+  "createPost": {
+    "title": "Crear Nuevo Post",
+    "subtitle": "Comparte tu conocimiento con la comunidad",
+    "basicInfo": "Información Básica",
+    "basicInfoDescription": "Completa los datos principales de tu post",
+    "postTitle": "Título del Post",
+    "excerpt": "Extracto",
+    "excerptPlaceholder": "Breve descripción del post...",
+    "content": "Contenido",
+    "configuration": "Configuración",
+    "category": "Categoría",
+    "status": "Estado",
+    "visibility": "Visibilidad",
+    "featuredImage": "Imagen Destacada",
+    "dragImage": "Arrastra una imagen o haz clic para seleccionar",
+    "selectImage": "Seleccionar Imagen",
+    "imageUploaded": "Imagen subida exitosamente",
+    "imageSelected": "Imagen seleccionada para subir",
+    "uploading": "Subiendo...",
+    "tags": "Tags",
+    "tagsDescription": "Añade etiquetas relevantes para tu post",
+    "newTag": "Nueva etiqueta...",
+    "publishPost": "Publicar Post",
+    "preview": "Vista Previa",
+    "edit": "Editar",
+    "previewTitle": "Vista Previa del Post",
+    "defaultContent": "Contenido del post...",
+    "defaultTitle": "Título del post",
+    "defaultExcerpt": "Extracto del post...",
+    "markdown": {
+      "edit": "Editar",
+      "preview": "Vista Previa",
+      "placeholder": "Escribe tu contenido aquí...",
+      "help": "Soporta formato Markdown básico. Usa la barra de herramientas para facilitar la edición.",
+      "bold": "Negrita",
+      "italic": "Cursiva",
+      "code": "Código",
+      "link": "Enlace",
+      "list": "Lista"
+    },
+    "errors": {
+      "invalidImageFile": "Por favor selecciona un archivo de imagen válido",
+      "imageTooLarge": "La imagen debe ser menor a 5MB",
+      "unexpectedError": "Error inesperado al crear el post"
+    },
+    "categories": {
+      "technology": "Tecnología",
+      "programming": "Programación",
+      "design": "Diseño",
+      "marketing": "Marketing",
+      "business": "Negocios",
+      "lifestyle": "Lifestyle",
+      "tutorials": "Tutoriales",
+      "news": "Noticias"
+    }
   }
 }

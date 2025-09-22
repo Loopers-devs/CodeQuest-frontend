@@ -64,6 +64,7 @@ export const CreatePostForm = () => {
         // Aquí iría la lógica para enviar al servicio
         console.log("Datos del post:", formData);
     };
+    
 
     return (
         <div className="max-w-4xl mx-auto p-6 space-y-6">
