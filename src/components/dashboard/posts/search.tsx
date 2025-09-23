@@ -108,7 +108,7 @@ export default function PostsSearch() {
   };
 
   return (
-    <div className="mb-4 flex justify-between flex-col gap-3 sm:flex-row sm:items-center">
+    <div className="mb-4 flex justify-between flex-col gap-3 sm:flex-row sm:items-center flex-wrap">
       <div className="relative w-full max-w-md">
         <Input
           placeholder={placeholder}
