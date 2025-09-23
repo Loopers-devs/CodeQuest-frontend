@@ -1,5 +1,5 @@
-import PostForm from "@/components/dashboard/posts/post-form";
 import { getPostBySlugAction } from "@/actions/post.action";
+import CreatePostForm from "@/components/posts/create-post-form";
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
@@ -10,5 +10,5 @@ export default async function EditPostPage({ params }: Props) {
 
   const post = await getPostBySlugAction(slug);
 
-  return <PostForm post={post} />;
+  return <CreatePostForm initialData={post} />;
 }

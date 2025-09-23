@@ -26,34 +26,13 @@ export function getCreatePostSchema(messages: {
       .string()
       .max(280, { message: messages.maxLength(280) })
       .optional()
-      .nullable()
-      .transform((s) => (typeof s === "string" ? s.trim() : s)),
+      .nullable(),
 
     content: z.string().min(10, { message: messages.minLength(10) }),
 
-    category: z
-      .string()
-      .optional()
-      .nullable()
-      .transform((s) => (typeof s === "string" ? s.trim() : s)),
+    categoryId: z.string().optional().nullable(),
 
-    tags: z
-      .preprocess((arg) => {
-        if (!arg) return [] as string[];
-        if (typeof arg === "string") {
-          // allow comma separated string
-          return (arg as string)
-            .split(/,|;/)
-            .map((t) => t.trim())
-            .filter(Boolean);
-        }
-        return Array.isArray(arg) ? arg : [];
-      }, z.array(z.string()).optional())
-      .transform((arr) =>
-        Array.isArray(arr)
-          ? [...new Set(arr.map((t) => t.trim().toLowerCase()).filter(Boolean))]
-          : []
-      ),
+    tags: z.array(z.string().min(2).max(100)).optional(),
 
     // Use z.enum instead of deprecated z.nativeEnum
     status: z.enum(

@@ -232,6 +232,8 @@
   "createPost": {
     "title": "Crear Nuevo Post",
     "subtitle": "Comparte tu conocimiento con la comunidad",
+    "editTitle": "Editar Post",
+    "editSubtitle": "Actualiza los detalles de tu post",
     "basicInfo": "Información Básica",
     "basicInfoDescription": "Completa los datos principales de tu post",
     "postTitle": "Título del Post",
@@ -252,6 +254,7 @@
     "tagsDescription": "Añade etiquetas relevantes para tu post",
     "newTag": "Nueva etiqueta...",
     "publishPost": "Publicar Post",
+    "updatePost": "Actualizar Post",
     "preview": "Vista Previa",
     "edit": "Editar",
     "previewTitle": "Vista Previa del Post",

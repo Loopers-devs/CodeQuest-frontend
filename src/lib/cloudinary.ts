@@ -5,27 +5,23 @@ export async function uploadImageToCloudinary(file: File): Promise<string | null
     // Crear FormData para enviar el archivo
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || 'codequest_posts');
-    formData.append('cloud_name', process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'your-cloud-name');
 
-    // Subir a Cloudinary
-    const response = await fetch(
-      `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
-      {
-        method: 'POST',
-        body: formData,
-      }
-    );
+    // Subir usando la API route (SDK de Cloudinary en el backend)
+    const response = await fetch('/api/upload', {
+      method: 'POST',
+      body: formData,
+    });
 
     if (!response.ok) {
-      throw new Error('Error uploading image to Cloudinary');
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Error uploading image to Cloudinary');
     }
 
     const data = await response.json();
 
-    if (data.secure_url) {
+    if (data.success && data.url) {
       toast.success('Imagen subida exitosamente');
-      return data.secure_url;
+      return data.url;
     } else {
       throw new Error('No se recibió URL de la imagen');
     }
