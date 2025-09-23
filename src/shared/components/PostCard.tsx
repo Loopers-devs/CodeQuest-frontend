@@ -31,7 +31,8 @@ const PostCard = ({ post }: PostCardProps) => {
   const { mutate: addPostToLikes } = useAddPostToLikes(post.id);
   const { mutate: removePostFromLikes } = useRemovePostFromLikes(post.id);
 
-  const isLiked = post?.likedBy?.find((like) => like.userId === session.user?.id) ? true : false;
+  const isLiked =  post?.likedBy?.find((like) => like.userId === session.user?.id) !== undefined;
+  const isFavorited = post.favoritedBy?.find((fav) => fav.userId === session.user?.id) !== undefined;
 
   const toggleLiked = () => {
 
@@ -66,7 +67,7 @@ const PostCard = ({ post }: PostCardProps) => {
           >
             {post.category}
           </Badge>
-          <FavoriteToggle postId={post.id} isFavorite={post.isFavorited} />
+          <FavoriteToggle postId={post.id} isFavorite={isFavorited} />
         </div>
 
         <Link href={`/posts/${post.slug}`}>

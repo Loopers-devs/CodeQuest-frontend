@@ -150,7 +150,6 @@ export async function removePostFromFavorites(postId: string) {
     body: JSON.stringify({ postId }),
   });
   if (!res.ok) {
-    console.log(await res.json());
     throw new Error("Error removing post from favorites");
   }
 
@@ -174,7 +173,7 @@ export async function getFavoritePostsByUser({ take, cursor }: { take?: number; 
 
   const data = await res.json();
 
-  return data as { items: Post[]; nextCursor: string | null};
+  return data as { items: Post[]; nextCursor: string | null };
 }
 
 // Likes

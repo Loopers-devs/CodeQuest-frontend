@@ -48,6 +48,7 @@ export const useAddPostToFavorites = (postId: string) => {
 
         if (itemUpdated && session?.id) {
           itemUpdated.isFavorited = true;
+          itemUpdated.favoritedBy = [...(itemUpdated.favoritedBy || []), { userId: session.id }];
         }
 
         return {
@@ -91,7 +92,10 @@ export const useRemovePostFromFavorites = (postId: string) => {
 
         if (itemUpdated && session?.id) {
           itemUpdated.isFavorited = false;
+          itemUpdated.favoritedBy = itemUpdated.favoritedBy?.filter(fav => fav.userId !== session.id);
         }
+
+        console.log(itemUpdated);
 
         return {
           ...oldData,
